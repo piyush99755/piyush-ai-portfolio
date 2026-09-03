@@ -6,6 +6,7 @@ export interface Bio {
   shortBio: string;
   longBio: string;
   availabilityStatus: string;
+  email?: string;
   primarySkills: string[];
 }
 

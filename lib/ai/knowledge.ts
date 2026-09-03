@@ -7,14 +7,23 @@ import { projectsData } from "@/data/projects";
 export function generateKnowledgeCorpus(): KnowledgeDocument[] {
   const docs: KnowledgeDocument[] = [];
 
-  // 1. Profile / Bio
+  // 1. Profile / Bio & Contact Info
   docs.push({
     id: "bio-profile-main",
     type: "profile",
     title: `${bioData.name} — Profile & Overview`,
-    content: `${bioData.name} is a ${bioData.role}. ${bioData.shortBio} ${bioData.longBio} Tagline: ${bioData.tagline}. Primary Skills: ${bioData.primarySkills.join(", ")}. Availability: ${bioData.availabilityStatus}. Location: ${bioData.location}.`,
-    keywords: ["piyush", "tadvi", "bio", "profile", "role", "background", "overview", "summary", "skills", "location", "availability", "full-stack", "ai engineer"],
+    content: `${bioData.name} is a ${bioData.role}. ${bioData.shortBio} ${bioData.longBio} Tagline: ${bioData.tagline}. Primary Skills: ${bioData.primarySkills.join(", ")}. Availability: ${bioData.availabilityStatus}. Location: ${bioData.location}. Contact Email: ${bioData.email || "piyushtadvi4@gmail.com"}.`,
+    keywords: ["piyush", "tadvi", "bio", "profile", "role", "background", "overview", "summary", "skills", "location", "availability", "email", "contact", "full-stack", "ai engineer"],
     sourceUrl: "/#about",
+  });
+
+  docs.push({
+    id: "bio-contact-details",
+    type: "profile",
+    title: `${bioData.name} — Contact Information`,
+    content: `Piyush Tadvi's official public contact email is piyushtadvi4@gmail.com. You can reach out directly via mailto:piyushtadvi4@gmail.com for remote full-time opportunities, AI consulting, and full-stack SaaS contract work. Profiles: GitHub (https://github.com/piyush99755), LinkedIn (https://linkedin.com/in/piyushtadvi).`,
+    keywords: ["contact", "email", "reach out", "hire", "email address", "piyushtadvi4@gmail.com", "github", "linkedin", "message"],
+    sourceUrl: "/#contact",
   });
 
   // 2. Qualitative Focus Pillars

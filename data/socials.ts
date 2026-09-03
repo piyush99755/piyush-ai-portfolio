@@ -3,20 +3,20 @@ import { SocialLink } from "@/types/portfolio";
 export const socialLinks: SocialLink[] = [
   {
     platform: "GitHub",
-    url: "https://github.com",
+    url: "https://github.com/piyush99755",
     label: "Explore GitHub repositories",
     iconName: "Code2",
   },
   {
     platform: "LinkedIn",
-    url: "https://linkedin.com",
+    url: "https://linkedin.com/in/piyushtadvi",
     label: "Connect on LinkedIn",
     iconName: "Globe",
   },
   {
     platform: "Email",
-    url: "mailto:piyush.tadvi@example.com",
-    label: "Send an email inquiry",
+    url: "mailto:piyushtadvi4@gmail.com",
+    label: "Send an email inquiry to piyushtadvi4@gmail.com",
     iconName: "Mail",
   },
 ];

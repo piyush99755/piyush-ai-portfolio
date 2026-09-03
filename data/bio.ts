@@ -10,6 +10,7 @@ export const bioData: Bio = {
   longBio:
     "I architect and build full-stack web applications and AI-driven platforms. My work spans voice & chat AI receptionists, e-commerce automation systems, and career acceleration tools. I focus on clean software architecture, reliable API integrations, scalable databases, and intuitive user experiences.",
   availabilityStatus: "Available for new projects & full-stack / AI roles",
+  email: "piyushtadvi4@gmail.com",
   primarySkills: [
     "Next.js & React",
     "TypeScript",

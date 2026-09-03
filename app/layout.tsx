@@ -71,6 +71,7 @@ const jsonLdSchema = {
       jobTitle: bioData.role,
       description: bioData.shortBio,
       url: "https://piyushtadvi.co.uk",
+      email: "mailto:piyushtadvi4@gmail.com",
       sameAs: [
         "https://github.com/piyush99755",
         "https://linkedin.com/in/piyushtadvi",

@@ -32,6 +32,8 @@ const ALIAS_MAP: Record<string, string[]> = {
   backend: ["express", "fastapi", "node", "python", "api", "server"],
   saas: ["myfelipe", "ecommerce", "product", "stripe"],
   automation: ["n8n", "ecommerce", "workflow", "twilio", "sms"],
+  email: ["contact", "piyushtadvi4@gmail.com", "reach out", "mail", "hire", "address"],
+  contact: ["email", "piyushtadvi4@gmail.com", "reach out", "github", "linkedin"],
 };
 
 export interface ScoredDocument {
