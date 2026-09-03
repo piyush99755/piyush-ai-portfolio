@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,19 +17,19 @@ export function AiTeaserSection() {
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="outline" className="text-primary border-primary/40 text-xs font-medium gap-1.5">
                   <Sparkles className="h-3.5 w-3.5" />
-                  Upcoming Feature Architecture
+                  Portfolio AI Assistant
                 </Badge>
-                <Badge variant="secondary" className="text-[11px]">
-                  Phase 4 & 5 Preview
+                <Badge variant="secondary" className="text-[11px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  Live Feature
                 </Badge>
               </div>
 
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-                Intelligent Portfolio Assistants
+                Intelligent Portfolio Assistant
               </h2>
 
               <p className="text-muted-foreground text-sm max-w-2xl leading-relaxed">
-                Future phases will integrate an interactive RAG-grounded conversational agent (&ldquo;Ask Piyush&rdquo;) and a Recruiter Job-Fit Analyzer to query engineering experience, project architectures, and tech stack alignment in real time.
+                Try &ldquo;Ask Piyush AI&rdquo; to query engineering experience, project architectures, API integrations, and tech stack alignment in real time with grounded portfolio evidence.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -44,19 +45,21 @@ export function AiTeaserSection() {
                   <UserCheck className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                   <div>
                     <h4 className="text-sm font-semibold text-foreground">Recruiter Job-Fit Analyzer</h4>
-                    <p className="text-xs text-muted-foreground">Automated role & tech requirements matching</p>
+                    <p className="text-xs text-muted-foreground">Automated role & tech matching (Phase 5)</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="lg:col-span-4 flex flex-col items-center justify-center text-center space-y-4 lg:border-l lg:border-border/40 lg:pl-8">
-              <Button disabled variant="outline" className="w-full gap-2 border-primary/40 text-muted-foreground cursor-not-allowed">
-                <Bot className="h-4 w-4 text-primary" />
-                Ask Piyush AI (Coming Soon)
-              </Button>
+              <Link href="/ask" className="w-full">
+                <Button variant="default" className="w-full gap-2 font-medium">
+                  <Bot className="h-4 w-4" />
+                  Launch Ask Piyush AI
+                </Button>
+              </Link>
               <p className="text-[11px] text-muted-foreground font-mono">
-                Data pipeline & grounding layer currently in staging architecture.
+                Grounded in canonical portfolio knowledge.
               </p>
             </div>
           </div>

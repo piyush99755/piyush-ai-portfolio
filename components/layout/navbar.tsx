@@ -27,14 +27,22 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
+          <Link
+            href="/ask"
+            className="text-primary font-semibold transition-colors hover:text-primary/80 flex items-center gap-1.5"
+          >
+            <Bot className="h-4 w-4" />
+            <span>Ask AI</span>
+          </Link>
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
-          <Badge variant="outline" className="border-border text-muted-foreground gap-1.5 py-1 text-[11px]">
-            <Bot className="h-3.5 w-3.5 text-primary" />
-            <span>Ask AI</span>
-            <span className="bg-secondary text-secondary-foreground px-1 py-0.2 rounded text-[9px]">Soon</span>
-          </Badge>
+          <Link href="/ask">
+            <Badge variant="outline" className="border-primary/40 text-primary hover:bg-primary/10 transition-colors gap-1.5 py-1 text-xs cursor-pointer">
+              <Bot className="h-3.5 w-3.5" />
+              <span>Ask Piyush AI</span>
+            </Badge>
+          </Link>
         </div>
       </Container>
     </header>

@@ -44,18 +44,19 @@ export function HeroSection() {
             </Button>
           </Link>
 
-          <Button
-            size="lg"
-            variant="outline"
-            disabled
-            className="gap-2 border-border/80 text-muted-foreground cursor-not-allowed opacity-80"
-          >
-            <Bot className="h-4 w-4 text-primary" />
-            Ask Piyush AI
-            <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-              Coming Soon (Phase 4)
-            </Badge>
-          </Button>
+          <Link href="/ask">
+            <Button
+              size="lg"
+              variant="outline"
+              className="gap-2 border-primary/40 text-primary hover:bg-primary/10 transition-colors"
+            >
+              <Bot className="h-4 w-4 text-primary" />
+              Ask Piyush AI
+              <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary border-none">
+                Live Assistant
+              </Badge>
+            </Button>
+          </Link>
         </div>
 
         {/* Primary Stack Badges */}
