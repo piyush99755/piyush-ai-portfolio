@@ -84,7 +84,25 @@ assert(
   `Persistence models present across ${verifiedDataModelProjects.length} verified projects`
 );
 
-// 4. AI Retrieval Accuracy for Project Code Queries
+// 4. AI Retrieval Accuracy for Project Code Queries & URL Sanitization Audit
+import { sanitizeAnswerUrls } from "../lib/ai/provider";
+
+const corruptedEcomUrl = "Check out https://github.com/piyush99755/ai-ecommerce-automation-hubsvg for source code.";
+const sanitizedEcomUrl = sanitizeAnswerUrls(corruptedEcomUrl);
+assert(
+  sanitizedEcomUrl === "Check out https://github.com/piyush99755/ai-ecommerce-automation-hub for source code.",
+  "sanitizeAnswerUrls successfully strips trailing 'svg' from corrupted E-commerce Hub GitHub URL",
+  `Output: ${sanitizedEcomUrl}`
+);
+
+const corruptedCareerUrl = "Check out https://github.com/piyush99755/career-copilot-ai.svg for source code.";
+const sanitizedCareerUrl = sanitizeAnswerUrls(corruptedCareerUrl);
+assert(
+  sanitizedCareerUrl === "Check out https://github.com/piyush99755/career-copilot-ai for source code.",
+  "sanitizeAnswerUrls successfully strips trailing '.svg' from corrupted Career Copilot GitHub URL",
+  `Output: ${sanitizedCareerUrl}`
+);
+
 const ecomRetrieval = retrieveKnowledge("Where can I see the code for the E-commerce Hub?");
 assert(
   ecomRetrieval.hasSufficientEvidence &&
@@ -96,3 +114,4 @@ assert(
 console.log("\n====================================================");
 console.log(`SUMMARY: ${passedCount} PASSED, ${failedCount} FAILED`);
 console.log("====================================================\n");
+

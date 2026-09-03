@@ -84,9 +84,9 @@ export function generateKnowledgeCorpus(): KnowledgeDocument[] {
 
     // Project Overview & Verified Links
     const repoInfo = project.githubUrl
-      ? `Public GitHub Repository: ${project.githubUrl}.`
+      ? `Public GitHub Repository URL: ${project.githubUrl} (verified code link)`
       : project.repositoryVisibility === "private"
-      ? `Private Client Repository (Code is confidential to client SaaS product).`
+      ? `Private Client Repository (Code is confidential to client SaaS product)`
       : "";
     const liveInfo = project.liveUrl ? `Live Project: ${project.liveUrl}.` : "";
 

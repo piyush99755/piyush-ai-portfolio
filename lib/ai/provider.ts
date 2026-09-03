@@ -43,8 +43,16 @@ export class FallbackProvider implements AiProvider {
       "\n\n"
     )}\n\n*Note: Running in local fallback mode. Configure \`AI_API_KEY\` in your environment for live LLM response synthesis.*`;
 
-    return { answer, sources };
+    return { answer: sanitizeAnswerUrls(answer), sources };
   }
+}
+
+export function sanitizeAnswerUrls(text: string): string {
+  if (!text) return text;
+  return text.replace(
+    /(https:\/\/github\.com\/piyush99755\/[a-zA-Z0-9_-]+?)\.?svg\b/gi,
+    "$1"
+  );
 }
 
 // 2. Google Gemini Provider (with AbortController Timeout)
@@ -113,7 +121,7 @@ export class GeminiProvider implements AiProvider {
         "I'm sorry, I could not generate a response from the provider.";
 
       return {
-        answer: candidateText.trim(),
+        answer: sanitizeAnswerUrls(candidateText.trim()),
         sources,
       };
     } catch (err: unknown) {
