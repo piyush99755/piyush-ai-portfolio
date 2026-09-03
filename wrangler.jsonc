@@ -1,0 +1,35 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "piyush-ai-portfolio",
+  "compatibility_date": "2026-09-03",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "main": "vinext/server/fetch-handler",
+  "workers_dev": true,
+  "assets": {
+    "directory": "dist/client",
+    "not_found_handling": "none",
+    "binding": "ASSETS"
+  },
+  "cache": {
+    "enabled": true
+  },
+  "version_metadata": {
+    "binding": "CF_VERSION_METADATA"
+  },
+  "vars": {
+    "AI_PROVIDER": "gemini",
+    "AI_MODEL": "gemini-3.6-flash"
+  },
+  "routes": [
+    {
+      "pattern": "piyushtadvi.co.uk",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.piyushtadvi.co.uk",
+      "custom_domain": true
+    }
+  ]
+}
