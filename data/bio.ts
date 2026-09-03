@@ -8,7 +8,7 @@ export const bioData: Bio = {
   shortBio:
     "Software engineer specializing in production AI integrations, full-stack web applications, automated business workflows, and robust backend APIs.",
   longBio:
-    "I architect and build full-stack web applications and AI-driven platforms. My work spans voice & chat AI receptionists, e-commerce automation systems, career acceleration tools, and community resource navigation platforms. I focus on clean software architecture, reliable API integrations, scalable databases, and intuitive user experiences.",
+    "I architect and build full-stack web applications and AI-driven platforms. My work spans voice & chat AI receptionists, e-commerce automation systems, and career acceleration tools. I focus on clean software architecture, reliable API integrations, scalable databases, and intuitive user experiences.",
   availabilityStatus: "Available for new projects & full-stack / AI roles",
   primarySkills: [
     "Next.js & React",

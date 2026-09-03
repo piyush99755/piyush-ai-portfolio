@@ -50,6 +50,48 @@ export type ProjectStatus =
   | "Active Development"
   | "Completed Concept";
 
+export interface ProjectArchitectureNode {
+  title: string;
+  subtitle: string;
+  items: string[];
+  type: "frontend" | "backend" | "service" | "database" | "external";
+}
+
+export interface ProjectDecision {
+  title: string;
+  context: string;
+  decision: string;
+  rationale: string;
+}
+
+export interface ProjectChallenge {
+  title: string;
+  problem: string;
+  rootCause?: string;
+  solution: string;
+}
+
+export interface ProjectIntegration {
+  name: string;
+  purpose: string;
+  category: string;
+}
+
+export interface CaseStudyDetails {
+  overview: string;
+  problem: string;
+  solution: string;
+  architectureDescription: string;
+  architectureNodes: ProjectArchitectureNode[];
+  features: string[];
+  engineeringDecisions: ProjectDecision[];
+  challenges: ProjectChallenge[];
+  reliabilityPatterns: string[];
+  securityConsiderations: string[];
+  integrations: ProjectIntegration[];
+  lessonsLearned: string[];
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -66,6 +108,7 @@ export interface Project {
   liveUrl?: string;
   githubUrl?: string;
   image?: string;
+  caseStudy?: CaseStudyDetails;
 }
 
 export interface ExperienceItem {

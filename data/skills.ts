@@ -36,18 +36,18 @@ export const skillCategories: SkillCategory[] = [
 export const skillsData: Skill[] = [
   // AI & Automation
   { name: "RAG Systems", category: "AI & Automation", level: "Expert", featured: true, relatedProjects: ["career-copilot-ai"] },
-  { name: "FastAPI / Python AI Services", category: "AI & Automation", level: "Expert", featured: true, relatedProjects: ["career-copilot-ai", "northassist-ai"] },
+  { name: "FastAPI / Python AI Services", category: "AI & Automation", level: "Expert", featured: true, relatedProjects: ["career-copilot-ai"] },
   { name: "Retell AI (Voice Agents)", category: "AI & Automation", level: "Advanced", featured: true, relatedProjects: ["myfelipe-ai-receptionist"] },
   { name: "n8n Automation", category: "AI & Automation", level: "Advanced", featured: true, relatedProjects: ["ai-ecommerce-automation-hub"] },
 
   // Backend
   { name: "Node.js & Express", category: "Backend", level: "Expert", featured: true, relatedProjects: ["myfelipe-ai-receptionist"] },
-  { name: "FastAPI (Python)", category: "Backend", level: "Expert", featured: true, relatedProjects: ["career-copilot-ai", "northassist-ai"] },
+  { name: "FastAPI (Python)", category: "Backend", level: "Expert", featured: true, relatedProjects: ["career-copilot-ai"] },
   { name: "REST API Design", category: "Backend", level: "Expert", featured: true },
 
   // Frontend
   { name: "Next.js (App Router)", category: "Frontend", level: "Expert", featured: true, relatedProjects: ["ai-ecommerce-automation-hub"] },
-  { name: "React & Vite", category: "Frontend", level: "Expert", featured: true, relatedProjects: ["myfelipe-ai-receptionist", "northassist-ai", "career-copilot-ai"] },
+  { name: "React & Vite", category: "Frontend", level: "Expert", featured: true, relatedProjects: ["myfelipe-ai-receptionist", "career-copilot-ai"] },
   { name: "TypeScript", category: "Frontend", level: "Expert", featured: true },
   { name: "Tailwind CSS", category: "Frontend", level: "Advanced", featured: true },
 
