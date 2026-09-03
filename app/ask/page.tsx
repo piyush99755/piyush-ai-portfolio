@@ -1,17 +1,17 @@
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
-import { ChatInterface } from "@/components/ai/chat-interface";
+import { AskTabs } from "@/components/ai/ask-tabs";
 import { Bot } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Ask Piyush AI — Grounded Portfolio Assistant",
+  title: "Ask Piyush AI & Job-Fit Analyzer",
   description:
-    "Ask natural-language questions about Piyush's engineering experience, skills, projects, and architecture decisions with verified portfolio evidence.",
+    "Ask natural-language questions about Piyush's engineering experience or paste a job description to perform a grounded technical alignment analysis.",
   openGraph: {
-    title: "Ask Piyush AI — Grounded Portfolio Assistant",
+    title: "Ask Piyush AI & Job-Fit Analyzer",
     description:
-      "Interactive AI assistant for exploring Piyush's full-stack and AI software engineering portfolio.",
+      "Interactive AI assistant & recruiter job-fit analyzer for Piyush's software engineering portfolio.",
   },
 };
 
@@ -24,17 +24,17 @@ export default function AskPage() {
           className="gap-1.5 px-3 py-1 text-xs border-primary/40 text-primary font-medium"
         >
           <Bot className="h-3.5 w-3.5" />
-          Interactive Portfolio AI
+          Interactive Portfolio Intelligence
         </Badge>
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
-          Ask Piyush AI
+          Ask Piyush AI &amp; Job Fit
         </h1>
         <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-          Query Piyush&apos;s verified engineering background, tech stack, project case studies, and architecture decisions. Grounded strictly in canonical portfolio data.
+          Ask natural-language questions about Piyush&apos;s background or paste a job description to inspect candidate alignment against verified portfolio evidence.
         </p>
       </div>
 
-      <ChatInterface />
+      <AskTabs />
     </Container>
   );
 }
