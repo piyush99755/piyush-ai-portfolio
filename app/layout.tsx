@@ -74,7 +74,7 @@ const jsonLdSchema = {
       email: "mailto:piyushtadvi4@gmail.com",
       sameAs: [
         "https://github.com/piyush99755",
-        "https://linkedin.com/in/piyushtadvi",
+        "https://ca.linkedin.com/in/piyush-tadvi-90b549211",
       ],
       knowsAbout: bioData.primarySkills,
     },

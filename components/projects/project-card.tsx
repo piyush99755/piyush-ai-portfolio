@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Project } from "@/types/portfolio";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpRight, CheckCircle2, Layers } from "lucide-react";
+import { ProjectThumbnail } from "./project-thumbnail";
+import { ArrowUpRight, CheckCircle2, ExternalLink, Code2, Lock, Layers } from "lucide-react";
 
 interface ProjectCardProps {
   project: Project;
@@ -11,22 +12,33 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card className="group relative flex flex-col justify-between overflow-hidden border-border/60 bg-card/60 backdrop-blur transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
-      <div className="absolute top-0 right-0 h-24 w-24 bg-gradient-to-bl from-primary/10 via-transparent to-transparent rounded-bl-full pointer-events-none" />
+      {/* Visual Thumbnail */}
+      <ProjectThumbnail project={project} />
 
       <CardHeader className="space-y-3 pb-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <Badge variant="outline" className="border-primary/40 text-primary text-xs font-medium">
             {project.category}
           </Badge>
-          <Badge variant="secondary" className="text-[11px] font-normal">
-            {project.status}
-          </Badge>
+          <div className="flex items-center gap-1.5">
+            {project.repositoryVisibility === "private" && (
+              <Badge variant="outline" className="border-amber-800/60 bg-amber-950/30 text-amber-400 text-[11px] font-normal flex items-center gap-1">
+                <Lock className="w-2.5 h-2.5" />
+                <span>Private</span>
+              </Badge>
+            )}
+            <Badge variant="secondary" className="text-[11px] font-normal">
+              {project.status}
+            </Badge>
+          </div>
         </div>
+
         <CardTitle className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
           <Link href={`/projects/${project.slug}`} className="focus:outline-none focus:underline">
             {project.title}
           </Link>
         </CardTitle>
+
         <p className="text-xs text-muted-foreground font-mono flex items-center gap-1.5">
           <Layers className="h-3.5 w-3.5 text-muted-foreground/80" />
           {project.projectType}
@@ -50,7 +62,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         )}
       </CardContent>
 
-      <CardFooter className="flex flex-col items-start gap-4 pt-2 border-t border-border/40">
+      <CardFooter className="flex flex-col items-start gap-4 pt-4 border-t border-border/40">
         <div className="flex flex-wrap gap-1.5">
           {project.technologies.map((tech) => (
             <Badge
@@ -63,12 +75,44 @@ export function ProjectCard({ project }: ProjectCardProps) {
           ))}
         </div>
 
-        <Link
-          href={`/projects/${project.slug}`}
-          className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary/80 transition-colors group-hover:translate-x-0.5 transition-transform"
-        >
-          View Case Study Blueprint <ArrowUpRight className="h-3.5 w-3.5" />
-        </Link>
+        {/* CTA Button Row */}
+        <div className="flex flex-wrap items-center justify-between w-full gap-2 pt-1">
+          <Link
+            href={`/projects/${project.slug}`}
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-primary text-primary-foreground shadow hover:bg-primary/90 transition-colors"
+          >
+            <span>View Case Study</span>
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
+
+          <div className="flex items-center gap-2">
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${project.title} GitHub repository`}
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-border/80 bg-background shadow-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+              >
+                <Code2 className="h-3.5 w-3.5" />
+                <span>GitHub</span>
+              </a>
+            )}
+
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${project.title} live demo`}
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-primary/40 text-primary hover:bg-primary/10 transition-colors"
+              >
+                <ExternalLink className="h-3.5 w-3.5" />
+                <span>Live Demo</span>
+              </a>
+            )}
+          </div>
+        </div>
       </CardFooter>
     </Card>
   );

@@ -21,7 +21,7 @@ export function generateKnowledgeCorpus(): KnowledgeDocument[] {
     id: "bio-contact-details",
     type: "profile",
     title: `${bioData.name} — Contact Information`,
-    content: `Piyush Tadvi's official public contact email is piyushtadvi4@gmail.com. You can reach out directly via mailto:piyushtadvi4@gmail.com for remote full-time opportunities, AI consulting, and full-stack SaaS contract work. Profiles: GitHub (https://github.com/piyush99755), LinkedIn (https://linkedin.com/in/piyushtadvi).`,
+    content: `Piyush Tadvi's official public contact email is piyushtadvi4@gmail.com. You can reach out directly via mailto:piyushtadvi4@gmail.com for remote full-time opportunities, AI consulting, and full-stack SaaS contract work. Profiles: GitHub (https://github.com/piyush99755), LinkedIn (https://ca.linkedin.com/in/piyush-tadvi-90b549211).`,
     keywords: ["contact", "email", "reach out", "hire", "email address", "piyushtadvi4@gmail.com", "github", "linkedin", "message"],
     sourceUrl: "/#contact",
   });
@@ -82,13 +82,32 @@ export function generateKnowledgeCorpus(): KnowledgeDocument[] {
   projectsData.forEach((project) => {
     const projectUrl = `/projects/${project.slug}`;
 
-    // Project Overview
+    // Project Overview & Verified Links
+    const repoInfo = project.githubUrl
+      ? `Public GitHub Repository: ${project.githubUrl}.`
+      : project.repositoryVisibility === "private"
+      ? `Private Client Repository (Code is confidential to client SaaS product).`
+      : "";
+    const liveInfo = project.liveUrl ? `Live Project: ${project.liveUrl}.` : "";
+
     docs.push({
       id: `project-overview-${project.id}`,
       type: "project-overview",
       title: `Project: ${project.title}`,
-      content: `${project.title} (${project.projectType}, ${project.category}, Status: ${project.status}): ${project.shortDescription} ${project.longDescription || ""} Technologies: ${project.technologies.join(", ")}. Key Highlights: ${project.highlights.join("; ")}.`,
-      keywords: [project.title.toLowerCase(), project.slug, project.category.toLowerCase(), project.projectType.toLowerCase(), ...project.technologies.map((t) => t.toLowerCase())],
+      content: `${project.title} (${project.projectType}, ${project.category}, Status: ${project.status}): ${project.shortDescription} ${project.longDescription || ""} ${repoInfo} ${liveInfo} Technologies: ${project.technologies.join(", ")}. Key Highlights: ${project.highlights.join("; ")}.`,
+      keywords: [
+        project.title.toLowerCase(),
+        project.slug,
+        project.category.toLowerCase(),
+        project.projectType.toLowerCase(),
+        "code",
+        "github",
+        "repository",
+        "demo",
+        "link",
+        "url",
+        ...project.technologies.map((t) => t.toLowerCase()),
+      ],
       projectSlug: project.slug,
       section: "Overview",
       sourceUrl: projectUrl,

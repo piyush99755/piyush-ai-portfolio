@@ -34,6 +34,9 @@ const ALIAS_MAP: Record<string, string[]> = {
   automation: ["n8n", "ecommerce", "workflow", "twilio", "sms"],
   email: ["contact", "piyushtadvi4@gmail.com", "reach out", "mail", "hire", "address"],
   contact: ["email", "piyushtadvi4@gmail.com", "reach out", "github", "linkedin"],
+  code: ["github", "repository", "project", "source", "link"],
+  github: ["repository", "code", "link", "url", "source"],
+  repo: ["github", "repository", "code"],
 };
 
 export interface ScoredDocument {

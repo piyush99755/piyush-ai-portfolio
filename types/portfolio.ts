@@ -78,17 +78,42 @@ export interface ProjectIntegration {
   category: string;
 }
 
+export interface ProjectWorkflowStep {
+  stepNumber: number;
+  title: string;
+  actor: string;
+  action: string;
+  technicalDetail: string;
+}
+
+export interface ProjectBackendMechanism {
+  title: string;
+  description: string;
+  keyTakeaway: string;
+}
+
+export interface ProjectDataPersistence {
+  modelName: string;
+  purpose: string;
+  keyFieldsOrPatterns: string[];
+}
+
 export interface CaseStudyDetails {
   overview: string;
   problem: string;
   solution: string;
+  roleDescription?: string;
   architectureDescription: string;
   architectureNodes: ProjectArchitectureNode[];
+  coreWorkflow?: ProjectWorkflowStep[];
   features: string[];
+  backendMechanisms?: ProjectBackendMechanism[];
+  dataPersistence?: ProjectDataPersistence[];
   engineeringDecisions: ProjectDecision[];
   challenges: ProjectChallenge[];
   reliabilityPatterns: string[];
   securityConsiderations: string[];
+  testingApproach?: string[];
   integrations: ProjectIntegration[];
   lessonsLearned: string[];
 }
@@ -106,9 +131,11 @@ export interface Project {
   projectType: "SaaS Product" | "Client / Enterprise Solution" | "AI System" | "Community Platform";
   featured: boolean;
   status: ProjectStatus;
-  liveUrl?: string;
   githubUrl?: string;
-  image?: string;
+  liveUrl?: string;
+  thumbnail?: string;
+  screenshots?: string[];
+  repositoryVisibility?: "public" | "private" | "not-available";
   caseStudy?: CaseStudyDetails;
 }
 

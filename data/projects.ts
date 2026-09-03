@@ -38,13 +38,24 @@ export const projectsData: Project[] = [
     projectType: "SaaS Product",
     featured: true,
     status: "Production",
+    repositoryVisibility: "private",
+    thumbnail: "/projects/myfelipe/thumbnail.png",
+    screenshots: [
+      "/projects/myfelipe/01-sms-reliability-case-study.png",
+      "/projects/myfelipe/02-prospecting-leads-dashboard.png",
+      "/projects/myfelipe/03-prospecting-leads-results.png",
+      "/projects/myfelipe/04-prospecting-run-configuration.png",
+      "/projects/myfelipe/05-marketing-control-center.png",
+    ],
     caseStudy: {
       overview:
         "MyFelipe AI Receptionist is an automated voice and marketing platform for service providers. It pairs conversational voice AI agents with live calendar booking, automated SMS follow-ups, lead qualification pipelines, and social marketing integrations.",
       problem:
-        "Service businesses frequently miss inbound calls during peak hours or after business hours, leading to delayed scheduling and lost prospective leads.",
+        "Service businesses frequently miss inbound calls during peak hours or after business hours, leading to delayed scheduling, uncaptured prospective leads, and lost revenue.",
       solution:
-        "Integrated Retell AI voice agents with Twilio telephony and Google Calendar API. When callers dial in, the voice agent conducts natural conversations, captures lead details, checks calendar availability, dispatches booking links via SMS, and records lead profiles in MongoDB.",
+        "Integrated Retell AI voice agents with Twilio telephony and Google Calendar API. When callers dial in, the voice agent conducts natural conversations, captures lead details, triggers booking-link dispatches via SMS, and records structured lead profiles in MongoDB.",
+      roleDescription:
+        "Full-stack web application development, voice AI integration, SMS workflow engineering, third-party API integration, and database architecture.",
       architectureDescription:
         "The system uses a layered application architecture. React client applications communicate with Node.js/Express backend services, which interface with Retell AI, Twilio, Google Calendar API, Stripe, Groq LLM, and Google Places API over a MongoDB data store.",
       architectureNodes: [
@@ -63,7 +74,7 @@ export const projectsData: Project[] = [
         {
           title: "3. Telephony & Voice Integrations",
           subtitle: "Retell AI + Twilio",
-          items: ["Voice Agent Processing", "Inbound Call Routing", "SMS Booking Delivery"],
+          items: ["Voice Agent Processing", "Phone Call Workflow", "send_booking_link Tool"],
           type: "service",
         },
         {
@@ -75,8 +86,45 @@ export const projectsData: Project[] = [
         {
           title: "5. Database",
           subtitle: "MongoDB",
-          items: ["Tenant Accounts", "Lead Profiles", "Booking & Call Schemas"],
+          items: ["Tenant Settings", "Lead Profiles", "Booking & Call Schemas"],
           type: "database",
+        },
+      ],
+      coreWorkflow: [
+        {
+          stepNumber: 1,
+          title: "Phone Call Connection",
+          actor: "Customer Phone Caller",
+          action: "Dials business phone number",
+          technicalDetail: "Caller reaches the Twilio-connected business number and is connected to the Retell AI voice receptionist.",
+        },
+        {
+          stepNumber: 2,
+          title: "Retell AI Voice Intake",
+          actor: "Retell AI Voice Agent",
+          action: "Conducts natural speech dialog with caller",
+          technicalDetail: "Collects caller details and booking intent through the voice conversation.",
+        },
+        {
+          stepNumber: 3,
+          title: "send_booking_link Tool Trigger",
+          actor: "Retell Agent Tool Execution",
+          action: "Invokes send_booking_link tool handler on Node.js backend",
+          technicalDetail: "Passes the caller information required by the backend to generate and send the booking link.",
+        },
+        {
+          stepNumber: 4,
+          title: "SMS Booking URL Delivery",
+          actor: "smsProvider Abstraction Layer",
+          action: "Dispatches SMS containing personalized booking URL",
+          technicalDetail: "The shared smsProvider abstraction reports provider success or failure truthfully instead of silently falling back and reporting a false success.",
+        },
+        {
+          stepNumber: 5,
+          title: "Web Booking & Calendar Synchronization",
+          actor: "User Browser & Google Calendar",
+          action: "User completes public web booking page",
+          technicalDetail: "User selects an appointment slot on the public booking page, after which the booking is persisted and synchronized with the appropriate Google Calendar workflow.",
         },
       ],
       features: [
@@ -85,7 +133,41 @@ export const projectsData: Project[] = [
         "SMS Booking Follow-Up: Direct SMS dispatch for booking links and appointment notifications.",
         "Lead Qualification Pipeline: Automated lead scoring using Groq LLM, Google Places data, and human review options.",
         "Subscription Billing: Tiered usage billing integrated with Stripe API.",
-        "Marketing Integrations: Agentic marketing workflows and social media publishing integrations.",
+        "Agentic Marketing System: Social media publishing integrations and automated campaign workflows.",
+      ],
+      backendMechanisms: [
+        {
+          title: "Truthful smsProvider Abstraction",
+          description: "Constructed a unified messaging provider abstraction that reports provider success or failure truthfully instead of silently falling back and reporting a false success.",
+          keyTakeaway: "Eliminates silent delivery failures and guarantees delivery status visibility.",
+        },
+        {
+          title: "Tenant OAuth & Calendar Fallback",
+          description: "Manages tenant-isolated Google Calendar OAuth refresh tokens with secondary fallback account support.",
+          keyTakeaway: "Prevents calendar sync outages while maintaining strict server-side credential boundaries.",
+        },
+        {
+          title: "Groq LLM Lead Qualification Pipeline",
+          description: "Combines Google Places API business data with Groq LLM prompts to score prospective leads before human review.",
+          keyTakeaway: "Automates high-value lead discovery while providing human override controls.",
+        },
+        {
+          title: "Social Payload Normalization",
+          description: "Normalizes video aspect ratios and upload metadata server-side prior to transmitting Instagram Reel publishing payloads.",
+          keyTakeaway: "Resolves platform API rejection errors caused by unformatted media metadata.",
+        },
+      ],
+      dataPersistence: [
+        {
+          modelName: "Tenant Settings & OAuth Credentials",
+          purpose: "Stores organization settings, Retell agent IDs, Stripe customer IDs, and OAuth tokens.",
+          keyFieldsOrPatterns: ["tenantId", "retellAgentId", "stripeSubscriptionId", "googleOAuthTokens"],
+        },
+        {
+          modelName: "Lead Records & Call Summary Logs",
+          purpose: "Tracks caller details, qualification scores, call transcripts, and booking states.",
+          keyFieldsOrPatterns: ["callerPhone", "qualificationScore", "status", "callSummary"],
+        },
       ],
       engineeringDecisions: [
         {
@@ -122,7 +204,7 @@ export const projectsData: Project[] = [
         },
       ],
       reliabilityPatterns: [
-        "Truthful provider success/failure status handling",
+        "Truthful provider success/failure status handling without silent fallback masking",
         "Tenant isolation for shared calendar fallback resources",
         "Deduplication prior to expensive LLM qualification calls",
       ],
@@ -177,15 +259,30 @@ export const projectsData: Project[] = [
     projectType: "SaaS Product",
     featured: true,
     status: "Active Development",
+    repositoryVisibility: "public",
+    githubUrl: "https://github.com/piyush99755/ai-ecommerce-automation-hub",
+    thumbnail: "/projects/ecommerce-hub/thumbnail.png",
+    screenshots: [
+      "/projects/ecommerce-hub/01-operations-dashboard.png",
+      "/projects/ecommerce-hub/02-inventory-operations.png",
+      "/projects/ecommerce-hub/03-automation-reliability.png",
+      "/projects/ecommerce-hub/04-grounded-ai-support.png",
+      "/projects/ecommerce-hub/05-admin-ai-copilot.png",
+      "/projects/ecommerce-hub/06-customer-crm.png",
+      "/projects/ecommerce-hub/07-admin-audit-trail.png",
+      "/projects/ecommerce-hub/08-analytics-bi.png",
+    ],
     caseStudy: {
       overview:
         "The AI E-commerce Automation Hub is a full-stack web application designed for order management and operational automation. It acts as an authoritative control center between store interfaces and background n8n-based automation workflows.",
       problem:
         "Relying on client-supplied product pricing in order submissions introduces severe price-tampering vulnerabilities, while manual inventory updating across channels causes fulfillment delays.",
       solution:
-        "Built a server-authoritative Next.js backend powered by PostgreSQL and Prisma ORM. When an order is placed (`POST /api/orders`), the server reloads fresh prices directly from the database, validates stock, executes an atomic Prisma transaction, and dispatches webhooks to n8n-based automation workflows.",
+        "Built a server-authoritative Next.js backend powered by PostgreSQL and Prisma ORM. When an order is placed (`POST /api/orders`), the server reloads fresh prices directly from the database, validates stock, and executes an atomic Prisma transaction.",
+      roleDescription:
+        "Full-stack application development, database schema design, and server-authoritative API route implementation.",
       architectureDescription:
-        "The system enforces server authority. Client cart submissions send product IDs and quantities. The Next.js API handler fetches current prices from PostgreSQL, validates inventory, commits a Prisma `$transaction`, stores unit-price snapshots, and dispatches webhooks to n8n-based automation workflows.",
+        "The system enforces server authority. Client cart submissions send product IDs and quantities. The Next.js API handler fetches current prices from PostgreSQL, validates inventory stock availability, commits a Prisma `$transaction`, and stores unit-price snapshots.",
       architectureNodes: [
         {
           title: "1. Storefront & Cart",
@@ -206,17 +303,86 @@ export const projectsData: Project[] = [
           type: "database",
         },
         {
-          title: "4. Automation Workflows",
-          subtitle: "n8n Integrations",
-          items: ["Order Event Webhooks", "n8n-Based Automation Workflows"],
+          title: "4. Operational Automation",
+          subtitle: "n8n Integration",
+          items: ["n8n-Based Automation Workflows"],
           type: "service",
+        },
+      ],
+      coreWorkflow: [
+        {
+          stepNumber: 1,
+          title: "Client Cart Submission",
+          actor: "Browser Client Cart",
+          action: "Triggers checkout submit to POST /api/orders",
+          technicalDetail: "Sends payload containing product IDs and quantities. Client price values are strictly ignored.",
+        },
+        {
+          stepNumber: 2,
+          title: "Payload Validation & Price Reload",
+          actor: "Next.js Route Handler",
+          action: "Fetches current Product records from PostgreSQL",
+          technicalDetail: "Reloads authoritative prices and verifies inventory stock levels for each requested line item.",
+        },
+        {
+          stepNumber: 3,
+          title: "Atomic Transaction Execution",
+          actor: "Prisma ORM ($transaction)",
+          action: "Executes multi-record database transaction block",
+          technicalDetail: "Upserts Customer record, creates Order record, and generates OrderItem unit-price snapshots.",
+        },
+        {
+          stepNumber: 4,
+          title: "Operational Workflows",
+          actor: "n8n Automation Engine",
+          action: "n8n-based automation workflows",
+          technicalDetail: "n8n-based automation workflows are integrated with the broader e-commerce operations project.",
         },
       ],
       features: [
         "Server-Authoritative Pricing: Recalculates order totals on the server using PostgreSQL records instead of trusting client price inputs.",
-        "Atomic Prisma Transactions: Uses `$transaction` blocks to ensure customer upsert, order creation, and stock updates commit together.",
+        "Atomic Prisma Transactions: Uses `$transaction` blocks to ensure customer upsert, order creation, and unit-price snapshots commit together.",
         "OrderItem Unit-Price Snapshots: Saves historical unit prices on OrderItem records at purchase time.",
-        "n8n Automation Integrations: Emits event webhooks to trigger n8n-based automation workflows.",
+        "n8n Automation Integrations: n8n-based automation workflows are integrated with the broader e-commerce operations project.",
+      ],
+      backendMechanisms: [
+        {
+          title: "Server-Authoritative Price Recalculation",
+          description: "Disregards client cart prices and calculates order totals using live PostgreSQL records.",
+          keyTakeaway: "Completely eliminates client-side price tampering attack vectors.",
+        },
+        {
+          title: "Atomic Prisma Transactions",
+          description: "Wraps customer upserting, order generation, and unit-price snapshotting in a single `$transaction` call.",
+          keyTakeaway: "Guarantees complete database consistency across multi-record writes.",
+        },
+        {
+          title: "Immutable Unit Price Snapshots",
+          description: "Stores historical unit prices on OrderItem records at checkout.",
+          keyTakeaway: "Protects financial audit trail against future product catalog price changes.",
+        },
+      ],
+      dataPersistence: [
+        {
+          modelName: "Customer",
+          purpose: "Stores customer contact information, email, and order history relationships.",
+          keyFieldsOrPatterns: ["id", "email", "name", "orders"],
+        },
+        {
+          modelName: "Product",
+          purpose: "Authoritative catalog data, live unit price, SKU, and available inventory stock.",
+          keyFieldsOrPatterns: ["id", "title", "price", "stockQuantity"],
+        },
+        {
+          modelName: "Order",
+          purpose: "Header order record containing calculated total, status, customer relation, and timestamp.",
+          keyFieldsOrPatterns: ["id", "customerId", "totalAmount", "status", "createdAt"],
+        },
+        {
+          modelName: "OrderItem",
+          purpose: "Line item snapshot capturing historical unit price and quantity at time of purchase.",
+          keyFieldsOrPatterns: ["id", "orderId", "productId", "quantity", "unitPriceSnapshot"],
+        },
       ],
       engineeringDecisions: [
         {
@@ -227,7 +393,7 @@ export const projectsData: Project[] = [
         },
         {
           title: "Atomic Prisma Transactions",
-          context: "Multi-step order creation involves customer upserting, order generation, and stock checking across database tables.",
+          context: "Multi-step order creation involves customer upserting, order generation, and stock validation across database tables.",
           decision: "Wrapped database operations in a single Prisma `$transaction` call.",
           rationale: "Guarantees database consistency so that all related records write successfully or roll back safely.",
         },
@@ -289,46 +455,100 @@ export const projectsData: Project[] = [
     projectType: "AI System",
     featured: true,
     status: "Production",
+    repositoryVisibility: "public",
+    githubUrl: "https://github.com/piyush99755/career-copilot-ai",
+    thumbnail: "/projects/career-copilot/thumbnail.png",
+    screenshots: [
+      "/projects/career-copilot/01-career-analysis.png",
+      "/projects/career-copilot/02-resume-match-analysis.png",
+      "/projects/career-copilot/03-career-chat.png",
+      "/projects/career-copilot/04-backend-api-overview.png",
+      "/projects/career-copilot/05-learning-roadmap.png",
+    ],
     caseStudy: {
       overview:
         "Career Copilot AI is a RAG-powered application designed to provide context-aware career guidance by combining candidate documentation with language model reasoning.",
       problem:
         "Generic LLM prompts lack specific context regarding an individual engineer's actual project background and target role requirements.",
       solution:
-        "Constructed a Retrieval-Augmented Generation pipeline using FastAPI and Python. Relevant document context is retrieved and formatted into LLM prompts to deliver grounded responses.",
+        "Constructed a Retrieval-Augmented Generation pipeline using FastAPI and Python. Relevant document context is retrieved through RAG and formatted into LLM prompts to deliver grounded responses.",
+      roleDescription:
+        "Frontend and backend development for AI-assisted career guidance application.",
       architectureDescription:
-        "The application pairs a React frontend with a FastAPI Python service. User queries trigger context retrieval before passing structured context to the LLM service.",
+        "The application pairs a React frontend with a FastAPI Python service. User queries trigger context retrieval through RAG before passing grounded context to the LLM service.",
       architectureNodes: [
         {
           title: "1. React Frontend UI",
           subtitle: "React + TypeScript",
-          items: ["Query Interface", "Response Display", "Document Context Selector"],
+          items: ["Query Interface", "Response Display"],
           type: "frontend",
         },
         {
           title: "2. FastAPI Backend",
           subtitle: "Python Asynchronous Service",
-          items: ["API Routes", "Context Retrieval Logic", "Prompt Formatting Engine"],
+          items: ["API Routes", "Context Retrieval Logic"],
           type: "backend",
         },
         {
           title: "3. RAG Retrieval Engine",
-          subtitle: "Context Matching",
-          items: ["Candidate Document Index", "Prompt Context Injector"],
+          subtitle: "Context Retrieval",
+          items: ["Relevant Context Retrieval"],
           type: "service",
         },
         {
           title: "4. LLM Service",
           subtitle: "Language Model Integration",
-          items: ["Prompt Execution", "Response Synthesis"],
+          items: ["Grounded Context Reasoning", "Response Synthesis"],
           type: "external",
         },
       ],
+      coreWorkflow: [
+        {
+          stepNumber: 1,
+          title: "User Query Input",
+          actor: "React Frontend UI",
+          action: "Submits career inquiry to FastAPI backend",
+          technicalDetail: "Sends user query to Python backend endpoint.",
+        },
+        {
+          stepNumber: 2,
+          title: "FastAPI Backend Intake",
+          actor: "FastAPI / Python Backend",
+          action: "Receives request and initiates RAG context retrieval",
+          technicalDetail: "Executes non-blocking asynchronous route handler.",
+        },
+        {
+          stepNumber: 3,
+          title: "RAG Context Retrieval",
+          actor: "RAG Architecture",
+          action: "Retrieves relevant background context",
+          technicalDetail: "Fetches candidate background context relevant to query.",
+        },
+        {
+          stepNumber: 4,
+          title: "LLM Response Synthesis",
+          actor: "LLM Integration",
+          action: "Language model receives grounded context and returns career-oriented response",
+          technicalDetail: "Returns synthesized response to React UI.",
+        },
+      ],
       features: [
-        "RAG Context Retrieval: Ingests document context to inform LLM generation.",
+        "RAG Context Retrieval: Combines document context with LLM prompts to inform response generation.",
         "FastAPI Async Endpoints: Asynchronous Python backend routes for handling query requests.",
-        "Context-Bounded Prompting: Formats prompt structures to incorporate candidate document details.",
+        "Context-Grounded Prompting: Formats prompt structures to incorporate relevant background context.",
         "Interactive React Interface: Responsive client UI for Q&A interaction.",
+      ],
+      backendMechanisms: [
+        {
+          title: "Asynchronous FastAPI Backend",
+          description: "Utilizes Python async route handlers for non-blocking I/O execution during external LLM API calls.",
+          keyTakeaway: "Maintains responsive server behavior under concurrent user query sessions.",
+        },
+        {
+          title: "Grounded Context Assembly",
+          description: "Incorporate relevant background context into system prompt templates.",
+          keyTakeaway: "Ensures LLM responses remain grounded in candidate experience details.",
+        },
       ],
       engineeringDecisions: [
         {
@@ -338,23 +558,23 @@ export const projectsData: Project[] = [
           rationale: "Provides clean asynchronous routing for non-blocking I/O handling during external API calls.",
         },
         {
-          title: "Context-Bounded Prompt Formatting",
+          title: "Context-Grounded Prompt Formatting",
           context: "LLM outputs require relevant candidate details to produce useful career insights.",
-          decision: "Structured prompt templates to inject retrieved document context directly into requests.",
+          decision: "Structured prompt templates to inject retrieved background context directly into requests.",
           rationale: "Improves factual alignment with candidate experience details.",
         },
       ],
       challenges: [
         {
-          title: "Formatting Unstructured Document Context",
-          problem: "Raw document text required clean formatting before prompt insertion.",
-          rootCause: "Inconsistent formatting across source candidate notes.",
-          solution: "Implemented text normalization steps prior to context prompt assembly.",
+          title: "Formatting Background Context",
+          problem: "Raw background text required clean formatting before prompt insertion.",
+          rootCause: "Inconsistent formatting across source notes.",
+          solution: "Implemented text formatting steps prior to context prompt assembly.",
         },
       ],
       reliabilityPatterns: [
         "Asynchronous route handling in Python via FastAPI",
-        "Structured prompt template schemas for context injection",
+        "Structured prompt templates for context injection",
       ],
       securityConsiderations: [
         "API secret keys stored securely in server environment variables",
