@@ -1,53 +1,92 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { bioData } from "@/data/bio";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://piyushtadvi.co.uk"),
   title: {
-    default: `${bioData.name} | ${bioData.role}`,
+    default: `${bioData.name} — ${bioData.role}`,
     template: `%s | ${bioData.name}`,
   },
-  description: bioData.shortBio,
+  description: bioData.tagline,
   keywords: [
+    "Piyush Tadvi",
     "AI Software Engineer",
-    "Full-Stack Developer",
-    "Voice AI Receptionist",
-    "Next.js",
-    "TypeScript",
-    "FastAPI",
-    "Python",
-    "Retell AI",
-    "Twilio",
-    "RAG",
-    "n8n Automation",
+    "Full-Stack Engineer",
+    "Next.js Developer",
+    "FastAPI Python",
+    "Retell AI Voice Receptionist",
+    "RAG Architecture",
+    "n8n Workflow Automation",
+    "TypeScript Portfolio",
   ],
-  authors: [{ name: bioData.name }],
+  authors: [{ name: bioData.name, url: "https://piyushtadvi.co.uk" }],
   creator: bioData.name,
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: `${bioData.name} | ${bioData.role}`,
-    description: bioData.shortBio,
+    url: "https://piyushtadvi.co.uk",
+    title: `${bioData.name} — ${bioData.role}`,
+    description: bioData.tagline,
     siteName: `${bioData.name} Portfolio`,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${bioData.name} | ${bioData.role}`,
-    description: bioData.shortBio,
+    title: `${bioData.name} — ${bioData.role}`,
+    description: bioData.tagline,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+const jsonLdSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://piyushtadvi.co.uk/#person",
+      name: bioData.name,
+      jobTitle: bioData.role,
+      description: bioData.shortBio,
+      url: "https://piyushtadvi.co.uk",
+      sameAs: [
+        "https://github.com/piyush99755",
+        "https://linkedin.com/in/piyushtadvi",
+      ],
+      knowsAbout: bioData.primarySkills,
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://piyushtadvi.co.uk/#website",
+      url: "https://piyushtadvi.co.uk",
+      name: `${bioData.name} AI & Full-Stack Engineering Portfolio`,
+      publisher: {
+        "@id": "https://piyushtadvi.co.uk/#person",
+      },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -56,11 +95,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/20 selection:text-primary">
+    <html lang="en" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+        />
+      </head>
+      <body
+        className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background text-foreground min-h-screen flex flex-col`}
+      >
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
