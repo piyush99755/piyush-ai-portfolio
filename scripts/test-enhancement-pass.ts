@@ -131,12 +131,33 @@ assert(
   `Found ${careerUrls.length} matches: ${careerUrls[0]}`
 );
 
-const ecomRetrieval = retrieveKnowledge("Where can I see the code for the E-commerce Hub?");
+// 5. Deterministic Repository Route Handler Assertion Audit
+const mockEcomMessage = "Where can I see the source code for the E-commerce Hub project?";
+const mockCareerMessage = "Where can I see Career Copilot's repository?";
+const mockMyFelipeMessage = "Can I see the MyFelipe source code?";
+
+const ecomRetrieval = retrieveKnowledge(mockEcomMessage);
 assert(
   ecomRetrieval.hasSufficientEvidence &&
     ecomRetrieval.documents.some((d) => d.content.includes("https://github.com/piyush99755/ai-ecommerce-automation-hub")),
   "Ask Piyush retrieval finds verified GitHub URL for E-commerce Hub",
   `Top Score: ${ecomRetrieval.topScore}`
+);
+
+const careerRetrieval = retrieveKnowledge(mockCareerMessage);
+assert(
+  careerRetrieval.hasSufficientEvidence &&
+    careerRetrieval.documents.some((d) => d.content.includes("https://github.com/piyush99755/career-copilot-ai")),
+  "Ask Piyush retrieval finds verified GitHub URL for Career Copilot",
+  `Top Score: ${careerRetrieval.topScore}`
+);
+
+const myFelipeRetrieval = retrieveKnowledge(mockMyFelipeMessage);
+assert(
+  myFelipeRetrieval.hasSufficientEvidence &&
+    myFelipeRetrieval.documents.some((d) => d.content.includes("Private Client Repository")),
+  "Ask Piyush retrieval correctly finds private repository evidence for MyFelipe",
+  `Top Score: ${myFelipeRetrieval.topScore}`
 );
 
 console.log("\n====================================================");
