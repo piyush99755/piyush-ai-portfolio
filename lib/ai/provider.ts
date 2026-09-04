@@ -49,10 +49,34 @@ export class FallbackProvider implements AiProvider {
 
 export function sanitizeAnswerUrls(text: string): string {
   if (!text) return text;
-  return text.replace(
+  let cleaned = text;
+
+  // 1. Strip trailing svg / .svg appended to GitHub URLs
+  cleaned = cleaned.replace(
     /(https:\/\/github\.com\/piyush99755\/[a-zA-Z0-9_-]+?)\.?svg\b/gi,
     "$1"
   );
+
+  // 2. Clean Markdown links [label](url) where label or url contains newlines, spaces, or absorbed headings
+  cleaned = cleaned.replace(
+    /\[([^\]]*?)\]\((https:\/\/github\.com\/piyush99755\/[a-zA-Z0-9_-]+)(?:\.svg|svg)?([\s\S]*?)\)/gi,
+    (match, label, rawUrl, trailingInParens) => {
+      const cleanUrl = rawUrl.trim();
+      let cleanLabel = label.trim().replace(/\.?svg$/i, "");
+
+      // If label contains newline or absorbed headings, trim label to clean URL/text
+      if (cleanLabel.includes("\n") || cleanLabel.includes("#")) {
+        const firstLine = cleanLabel.split("\n")[0].trim();
+        cleanLabel = firstLine.startsWith("http") ? firstLine : cleanUrl;
+      }
+      if (!cleanLabel) cleanLabel = cleanUrl;
+
+      const trailing = trailingInParens ? trailingInParens.trim() : "";
+      return `[${cleanLabel}](${cleanUrl})${trailing ? `\n\n${trailing}` : ""}`;
+    }
+  );
+
+  return cleaned;
 }
 
 // 2. Google Gemini Provider (with AbortController Timeout)

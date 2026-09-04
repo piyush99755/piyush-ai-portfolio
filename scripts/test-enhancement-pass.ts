@@ -103,6 +103,27 @@ assert(
   `Output: ${sanitizedCareerUrl}`
 );
 
+// Advanced Link Absorption & Destination Newline Regression Test
+const absorbedEcomLink = "[https://github.com/piyush99755/ai-ecommerce-automation-hub\n\n###](https://github.com/piyush99755/ai-ecommerce-automation-hub\n\n### About the Repository)";
+const cleanedAbsorbedLink = sanitizeAnswerUrls(absorbedEcomLink);
+assert(
+  cleanedAbsorbedLink === "[https://github.com/piyush99755/ai-ecommerce-automation-hub](https://github.com/piyush99755/ai-ecommerce-automation-hub)\n\n### About the Repository",
+  "sanitizeAnswerUrls separates absorbed newlines and Markdown headings from link destination",
+  `Output: ${JSON.stringify(cleanedAbsorbedLink)}`
+);
+
+// Destination URL regex parser validation
+const linkMatch = cleanedAbsorbedLink.match(/\[([^\]]+)\]\((https:\/\/[^\s)\n]+)\)/);
+const parsedUrl = linkMatch ? linkMatch[2] : "";
+assert(
+  parsedUrl === "https://github.com/piyush99755/ai-ecommerce-automation-hub" &&
+    !parsedUrl.includes("\n") &&
+    !parsedUrl.includes("#") &&
+    !parsedUrl.endsWith("svg"),
+  "Parsed Markdown link destination is clean exact E-commerce Hub GitHub URL",
+  `Parsed URL: ${parsedUrl}`
+);
+
 const ecomRetrieval = retrieveKnowledge("Where can I see the code for the E-commerce Hub?");
 assert(
   ecomRetrieval.hasSufficientEvidence &&
