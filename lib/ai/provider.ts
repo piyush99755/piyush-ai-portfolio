@@ -51,30 +51,46 @@ export function sanitizeAnswerUrls(text: string): string {
   if (!text) return text;
   let cleaned = text;
 
-  // 1. Strip trailing svg / .svg appended to GitHub URLs
+  // 1. Strip trailing svg / .svg or attached punctuation appended to bare GitHub URLs
   cleaned = cleaned.replace(
     /(https:\/\/github\.com\/piyush99755\/[a-zA-Z0-9_-]+?)\.?svg\b/gi,
     "$1"
   );
 
-  // 2. Clean Markdown links [label](url) where label or url contains newlines, spaces, or absorbed headings
+  // 2. Replace any Markdown link structure containing a Piyush GitHub URL with just the clean bare URL
   cleaned = cleaned.replace(
-    /\[([^\]]*?)\]\((https:\/\/github\.com\/piyush99755\/[a-zA-Z0-9_-]+)(?:\.svg|svg)?([\s\S]*?)\)/gi,
-    (match, label, rawUrl, trailingInParens) => {
-      const cleanUrl = rawUrl.trim();
-      let cleanLabel = label.trim().replace(/\.?svg$/i, "");
-
-      // If label contains newline or absorbed headings, trim label to clean URL/text
-      if (cleanLabel.includes("\n") || cleanLabel.includes("#")) {
-        const firstLine = cleanLabel.split("\n")[0].trim();
-        cleanLabel = firstLine.startsWith("http") ? firstLine : cleanUrl;
-      }
-      if (!cleanLabel) cleanLabel = cleanUrl;
-
-      const trailing = trailingInParens ? trailingInParens.trim() : "";
-      return `[${cleanLabel}](${cleanUrl})${trailing ? `\n\n${trailing}` : ""}`;
-    }
+    /\[+[\s\S]*?(https:\/\/github\.com\/piyush99755\/[a-zA-Z0-9_-]+)[\s\S]*?\]+(\([\s\S]*?\))?/gi,
+    "$1"
   );
+
+  // 3. Clean any leftover brackets or parentheses directly wrapping bare GitHub URLs
+  cleaned = cleaned.replace(
+    /[\[\(]*(https:\/\/github\.com\/piyush99755\/[a-zA-Z0-9_-]+)[\]\)]*/gi,
+    "$1"
+  );
+
+  // 4. Ensure bare GitHub URL is separated by newlines from any following heading
+  cleaned = cleaned.replace(
+    /(https:\/\/github\.com\/piyush99755\/[a-zA-Z0-9_-]+)[\r\n\s]*(###+)/gi,
+    "$1\n\n$2"
+  );
+
+  // 5. Clean any trailing standalone brackets or parens left on headings
+  cleaned = cleaned.replace(/(###+)[\]\)]+/g, "$1");
+
+  // 6. Deduplicate identical GitHub URLs in the same answer if emitted multiple times
+  const knownRepos = [
+    "https://github.com/piyush99755/ai-ecommerce-automation-hub",
+    "https://github.com/piyush99755/career-copilot-ai",
+    "https://github.com/piyush99755",
+  ];
+
+  knownRepos.forEach((url) => {
+    const parts = cleaned.split(url);
+    if (parts.length > 2) {
+      cleaned = parts[0] + url + parts.slice(1).join("");
+    }
+  });
 
   return cleaned;
 }

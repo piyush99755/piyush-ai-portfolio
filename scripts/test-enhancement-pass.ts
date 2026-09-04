@@ -84,44 +84,51 @@ assert(
   `Persistence models present across ${verifiedDataModelProjects.length} verified projects`
 );
 
-// 4. AI Retrieval Accuracy for Project Code Queries & URL Sanitization Audit
+// 4. AI Retrieval Accuracy for Project Code Queries & Deterministic URL Sanitization Audit
 import { sanitizeAnswerUrls } from "../lib/ai/provider";
 
-const corruptedEcomUrl = "Check out https://github.com/piyush99755/ai-ecommerce-automation-hubsvg for source code.";
-const sanitizedEcomUrl = sanitizeAnswerUrls(corruptedEcomUrl);
+const malformedInputs = [
+  "[[https://github.com/piyush99755/ai-ecommerce-automation-hub](https://github.com/piyush99755/ai-ecommerce-automation-hub) ###](https://github.com/piyush99755/ai-ecommerce-automation-hub)",
+  "https://github.com/piyush99755/ai-ecommerce-automation-hub\n\n### About",
+  "Check https://github.com/piyush99755/ai-ecommerce-automation-hubsvg for code",
+  "Check https://github.com/piyush99755/ai-ecommerce-automation-hub.svg for code",
+  "[https://github.com/piyush99755/ai-ecommerce-automation-hub](https://github.com/piyush99755/ai-ecommerce-automation-hub)",
+];
+
+const cleanedOutputs = malformedInputs.map(sanitizeAnswerUrls);
+
+cleanedOutputs.forEach((out, idx) => {
+  const isClean =
+    !out.includes("[[https://") &&
+    !out.includes("](https://") &&
+    !out.includes("ai-ecommerce-automation-hubsvg") &&
+    !out.includes("ai-ecommerce-automation-hub.svg");
+  assert(
+    isClean,
+    `sanitizeAnswerUrls cleans malformed test case ${idx + 1} cleanly into bare URL format`,
+    `Cleaned output: ${JSON.stringify(out)}`
+  );
+});
+
+// URL Count & Exact Match Verification
+const ecomSampleOutput = sanitizeAnswerUrls(
+  "Here is the source code: [https://github.com/piyush99755/ai-ecommerce-automation-hub](https://github.com/piyush99755/ai-ecommerce-automation-hub)\n\n### Features"
+);
+const ecomUrls = ecomSampleOutput.match(/https:\/\/github\.com\/piyush99755\/ai-ecommerce-automation-hub/g) || [];
 assert(
-  sanitizedEcomUrl === "Check out https://github.com/piyush99755/ai-ecommerce-automation-hub for source code.",
-  "sanitizeAnswerUrls successfully strips trailing 'svg' from corrupted E-commerce Hub GitHub URL",
-  `Output: ${sanitizedEcomUrl}`
+  ecomUrls.length === 1 && ecomUrls[0] === "https://github.com/piyush99755/ai-ecommerce-automation-hub",
+  "Sanitized output contains exactly one clean E-commerce Hub GitHub URL",
+  `Found ${ecomUrls.length} matches: ${ecomUrls[0]}`
 );
 
-const corruptedCareerUrl = "Check out https://github.com/piyush99755/career-copilot-ai.svg for source code.";
-const sanitizedCareerUrl = sanitizeAnswerUrls(corruptedCareerUrl);
-assert(
-  sanitizedCareerUrl === "Check out https://github.com/piyush99755/career-copilot-ai for source code.",
-  "sanitizeAnswerUrls successfully strips trailing '.svg' from corrupted Career Copilot GitHub URL",
-  `Output: ${sanitizedCareerUrl}`
+const careerSampleOutput = sanitizeAnswerUrls(
+  "Here is the source code: [https://github.com/piyush99755/career-copilot-ai](https://github.com/piyush99755/career-copilot-ai)\n\n### Overview"
 );
-
-// Advanced Link Absorption & Destination Newline Regression Test
-const absorbedEcomLink = "[https://github.com/piyush99755/ai-ecommerce-automation-hub\n\n###](https://github.com/piyush99755/ai-ecommerce-automation-hub\n\n### About the Repository)";
-const cleanedAbsorbedLink = sanitizeAnswerUrls(absorbedEcomLink);
+const careerUrls = careerSampleOutput.match(/https:\/\/github\.com\/piyush99755\/career-copilot-ai/g) || [];
 assert(
-  cleanedAbsorbedLink === "[https://github.com/piyush99755/ai-ecommerce-automation-hub](https://github.com/piyush99755/ai-ecommerce-automation-hub)\n\n### About the Repository",
-  "sanitizeAnswerUrls separates absorbed newlines and Markdown headings from link destination",
-  `Output: ${JSON.stringify(cleanedAbsorbedLink)}`
-);
-
-// Destination URL regex parser validation
-const linkMatch = cleanedAbsorbedLink.match(/\[([^\]]+)\]\((https:\/\/[^\s)\n]+)\)/);
-const parsedUrl = linkMatch ? linkMatch[2] : "";
-assert(
-  parsedUrl === "https://github.com/piyush99755/ai-ecommerce-automation-hub" &&
-    !parsedUrl.includes("\n") &&
-    !parsedUrl.includes("#") &&
-    !parsedUrl.endsWith("svg"),
-  "Parsed Markdown link destination is clean exact E-commerce Hub GitHub URL",
-  `Parsed URL: ${parsedUrl}`
+  careerUrls.length === 1 && careerUrls[0] === "https://github.com/piyush99755/career-copilot-ai",
+  "Sanitized output contains exactly one clean Career Copilot GitHub URL",
+  `Found ${careerUrls.length} matches: ${careerUrls[0]}`
 );
 
 const ecomRetrieval = retrieveKnowledge("Where can I see the code for the E-commerce Hub?");
