@@ -56,12 +56,38 @@ export function generateKnowledgeCorpus(): KnowledgeDocument[] {
   });
 
   skillsData.forEach((skill) => {
+    const tierLabel = skill.tier === "primary" ? "Primary Stack" : "Foundational / Supporting Skill";
+    const levelStr = skill.level ? ` at ${skill.level} level` : "";
+    const descStr = skill.description ? ` ${skill.description}` : "";
+    const projectStr =
+      skill.relatedProjects && skill.relatedProjects.length > 0
+        ? ` Verified in portfolio projects: ${skill.relatedProjects.join(", ")}.`
+        : "";
+    const aliasStr =
+      skill.aliases && skill.aliases.length > 0
+        ? ` Related keywords and aliases: ${skill.aliases.join(", ")}.`
+        : "";
+
+    const keywordsSet = new Set<string>([
+      skill.name.toLowerCase(),
+      skill.category.toLowerCase(),
+      tierLabel.toLowerCase(),
+      "skill",
+      "experience",
+      "competency",
+      "knowledge",
+      "expertise",
+      ...skill.name.toLowerCase().split(/[\s/()+-]+/).filter(Boolean),
+      ...(skill.aliases ? skill.aliases.map((a) => a.toLowerCase()) : []),
+      ...(skill.relatedProjects ? skill.relatedProjects.map((p) => p.toLowerCase()) : []),
+    ]);
+
     docs.push({
       id: `skill-${skill.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`,
       type: "skill",
       title: `Skill: ${skill.name}`,
-      content: `Piyush has verified expertise in ${skill.name} under the category "${skill.category}"${skill.level ? ` at ${skill.level} level` : ""}.${skill.relatedProjects ? ` Used in projects: ${skill.relatedProjects.join(", ")}.` : ""}`,
-      keywords: [skill.name.toLowerCase(), skill.category.toLowerCase(), "expertise", "technology"],
+      content: `Piyush has verified ${skill.name} experience (${tierLabel})${levelStr} under ${skill.category}.${descStr}${projectStr}${aliasStr}`,
+      keywords: Array.from(keywordsSet),
       sourceUrl: "/#skills",
     });
   });
@@ -89,25 +115,45 @@ export function generateKnowledgeCorpus(): KnowledgeDocument[] {
       ? `Private Client Repository (Code is confidential to client SaaS product)`
       : "";
     const liveInfo = project.liveUrl ? `Live Project: ${project.liveUrl}.` : "";
+    const statusNote =
+      project.status === "Active Development"
+        ? `Project Status: ACTIVE DEVELOPMENT (Under active engineering; not yet production deployed).`
+        : `Project Status: ${project.status}.`;
+
+    const projectKeywords = new Set<string>([
+      project.title.toLowerCase(),
+      project.slug,
+      project.category.toLowerCase(),
+      project.projectType.toLowerCase(),
+      "code",
+      "github",
+      "repository",
+      "demo",
+      "link",
+      "url",
+      ...project.technologies.map((t) => t.toLowerCase()),
+    ]);
+
+    if (project.status === "Active Development") {
+      projectKeywords.add("active development");
+      projectKeywords.add("in progress");
+      projectKeywords.add("currently building");
+      projectKeywords.add("current project");
+      projectKeywords.add("current work");
+      projectKeywords.add("building");
+      projectKeywords.add("wip");
+      projectKeywords.add("learning");
+      projectKeywords.add("study");
+      projectKeywords.add("engine");
+      projectKeywords.add("recallforge");
+    }
 
     docs.push({
       id: `project-overview-${project.id}`,
       type: "project-overview",
       title: `Project: ${project.title}`,
-      content: `${project.title} (${project.projectType}, ${project.category}, Status: ${project.status}): ${project.shortDescription} ${project.longDescription || ""} ${repoInfo} ${liveInfo} Technologies: ${project.technologies.join(", ")}. Key Highlights: ${project.highlights.join("; ")}.`,
-      keywords: [
-        project.title.toLowerCase(),
-        project.slug,
-        project.category.toLowerCase(),
-        project.projectType.toLowerCase(),
-        "code",
-        "github",
-        "repository",
-        "demo",
-        "link",
-        "url",
-        ...project.technologies.map((t) => t.toLowerCase()),
-      ],
+      content: `${project.title} (${project.projectType}, ${project.category}, ${statusNote}): ${project.shortDescription} ${project.longDescription || ""} ${repoInfo} ${liveInfo} Technologies: ${project.technologies.join(", ")}. Key Highlights: ${project.highlights.join("; ")}.`,
+      keywords: Array.from(projectKeywords),
       projectSlug: project.slug,
       section: "Overview",
       sourceUrl: projectUrl,

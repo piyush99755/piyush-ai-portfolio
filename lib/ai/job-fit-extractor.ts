@@ -13,6 +13,9 @@ const KNOWN_SKILL_PATTERNS: SkillPattern[] = [
   { id: "react", label: "React", category: "frontend", keywords: ["react", "react.js", "reactjs"], aliases: ["react"] },
   { id: "nextjs", label: "Next.js", category: "frontend", keywords: ["next.js", "nextjs", "next"], aliases: ["nextjs", "app router"] },
   { id: "typescript", label: "TypeScript", category: "frontend", keywords: ["typescript", "ts"], aliases: ["typescript"] },
+  { id: "html", label: "HTML / HTML5", category: "frontend", keywords: ["html", "html5", "semantic html"], aliases: ["html", "html5"] },
+  { id: "css", label: "CSS / CSS3", category: "frontend", keywords: ["css", "css3", "styling"], aliases: ["css", "css3"] },
+  { id: "javascript", label: "JavaScript", category: "frontend", keywords: ["javascript", "js", "es6"], aliases: ["javascript", "js"] },
   { id: "tailwind", label: "Tailwind CSS", category: "frontend", keywords: ["tailwind", "tailwindcss"], aliases: ["tailwind"] },
 
   // Backend
@@ -36,8 +39,12 @@ const KNOWN_SKILL_PATTERNS: SkillPattern[] = [
 
   // Databases
   { id: "postgresql", label: "PostgreSQL", category: "databases", keywords: ["postgresql", "postgres"], aliases: ["postgresql", "postgres"] },
+  { id: "sql", label: "SQL", category: "databases", keywords: ["sql", "relational database", "relational databases"], aliases: ["sql"] },
   { id: "mongodb", label: "MongoDB", category: "databases", keywords: ["mongodb", "mongo"], aliases: ["mongodb"] },
   { id: "prisma", label: "Prisma ORM", category: "databases", keywords: ["prisma", "prisma orm"], aliases: ["prisma"] },
+
+  // Tools & Platforms
+  { id: "git", label: "Git & GitHub", category: "tools", keywords: ["git", "github", "version control"], aliases: ["git", "github"] },
 
   // Cloud & DevOps (Unsupported / Gap Detections)
   { id: "kubernetes", label: "Kubernetes", category: "cloud/devops", keywords: ["kubernetes", "k8s"], aliases: ["kubernetes"] },

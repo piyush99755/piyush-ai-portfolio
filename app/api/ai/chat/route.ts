@@ -5,7 +5,7 @@ import { getAiProvider } from "@/lib/ai/provider";
 
 function checkRepoIntent(message: string): {
   isRepoQuery: boolean;
-  projectKey?: "ecommerce-hub" | "career-copilot" | "myfelipe-ai" | "profile";
+  projectKey?: "ecommerce-hub" | "career-copilot" | "myfelipe-ai" | "study-engine" | "profile";
 } {
   const msgLower = message.toLowerCase();
 
@@ -27,6 +27,15 @@ function checkRepoIntent(message: string): {
   const hasRepoKeyword = repoKeywords.some((kw) => msgLower.includes(kw));
   if (!hasRepoKeyword) {
     return { isRepoQuery: false };
+  }
+
+  if (
+    msgLower.includes("recallforge") ||
+    msgLower.includes("recall forge") ||
+    msgLower.includes("study engine") ||
+    msgLower.includes("personal ai study")
+  ) {
+    return { isRepoQuery: true, projectKey: "study-engine" };
   }
 
   if (
@@ -143,6 +152,22 @@ export async function POST(req: Request) {
         });
       }
 
+      if (repoIntent.projectKey === "study-engine") {
+        return NextResponse.json({
+          answer:
+            "The source code for the Personal AI Study Engine (RecallForge AI) is available on GitHub:\n\nhttps://github.com/piyush99755/RecallForge-AI\n\nPlease note that this project is currently in active development.",
+          sources: [
+            {
+              title: "Personal AI Study Engine (RecallForge AI)",
+              type: "project-overview",
+              projectSlug: "personal-ai-study-engine",
+              href: "/projects/personal-ai-study-engine",
+            },
+          ] as SourceCitation[],
+          retrievedDocsCount: 1,
+        });
+      }
+
       if (repoIntent.projectKey === "profile") {
         return NextResponse.json({
           answer:
@@ -187,7 +212,7 @@ export async function POST(req: Request) {
 
     if (!retrieval.hasSufficientEvidence) {
       return NextResponse.json({
-        answer: `I don't have enough verified information in Piyush's portfolio to claim experience with that topic or request.\n\nPiyush's verified portfolio highlights expertise in Next.js, React, TypeScript, Node.js/Express, FastAPI/Python, Retell AI, Twilio, Google Calendar, Stripe, PostgreSQL, MongoDB, Prisma, and RAG architectures.`,
+        answer: `I don't have enough verified information in Piyush's portfolio to claim experience with that topic or request.\n\nPiyush's verified portfolio highlights expertise in Next.js, React, TypeScript, HTML/CSS, JavaScript, Node.js/Express, FastAPI/Python, Retell AI, Twilio, Google Calendar, Stripe, PostgreSQL, MongoDB, Prisma, and RAG architectures.`,
         sources: [],
         retrievedDocsCount: 0,
       });

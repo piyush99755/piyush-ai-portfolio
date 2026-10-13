@@ -29,9 +29,12 @@ export type SkillCategoryType =
 export interface Skill {
   name: string;
   category: SkillCategoryType;
+  tier?: "primary" | "foundational";
   level?: "Expert" | "Advanced" | "Proficient";
   featured?: boolean;
   relatedProjects?: string[];
+  description?: string;
+  aliases?: string[];
 }
 
 export interface SkillCategory {

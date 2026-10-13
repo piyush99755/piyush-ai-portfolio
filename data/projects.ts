@@ -39,6 +39,7 @@ export const projectsData: Project[] = [
     featured: true,
     status: "Production",
     repositoryVisibility: "private",
+    liveUrl: "https://myfelipe.ai",
     thumbnail: "/projects/myfelipe/thumbnail.png",
     screenshots: [
       "/projects/myfelipe/01-sms-reliability-case-study.png",
@@ -457,6 +458,7 @@ export const projectsData: Project[] = [
     status: "Production",
     repositoryVisibility: "public",
     githubUrl: "https://github.com/piyush99755/career-copilot-ai",
+    liveUrl: "https://career-copilot-ai-jade.vercel.app",
     thumbnail: "/projects/career-copilot/thumbnail.png",
     screenshots: [
       "/projects/career-copilot/01-career-analysis.png",
@@ -588,6 +590,285 @@ export const projectsData: Project[] = [
       lessonsLearned: [
         "Structuring input context cleanly directly improves language model response relevance.",
         "Asynchronous Python frameworks provide an effective backend layer for AI services.",
+      ],
+    },
+  },
+  {
+    id: "personal-ai-study-engine",
+    slug: "personal-ai-study-engine",
+    title: "Personal AI Study Engine (RecallForge AI)",
+    shortDescription:
+      "Active AI study engine for searching, understanding, and learning from technical project journals, codebases, and architectural decision records — built with FastAPI, PostgreSQL, SQLAlchemy, Alembic, and pgvector.",
+    longDescription:
+      "RecallForge AI is an active learning engine and technical study platform designed to search, synthesize, and test knowledge across real-world engineering project journals, architectural decision records, and technical documentation. Built on a modular FastAPI backend with PostgreSQL, SQLAlchemy, Alembic migrations, and pgvector, the system is engineered around grounded retrieval, exact source citations, and active recall challenge modes.",
+    category: "AI & Automation",
+    technologies: [
+      "FastAPI",
+      "Python",
+      "PostgreSQL",
+      "SQLAlchemy",
+      "Alembic",
+      "pgvector",
+      "RAG Architecture",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+    ],
+    highlights: [
+      "Modular FastAPI Python backend with asynchronous route execution and domain separation",
+      "PostgreSQL relational schema managed via Alembic migrations and pgvector vector storage",
+      "Multi-entity database foundation modeling projects, documents, versions, sections, chunks, embeddings, and knowledge gaps",
+      "Multi-mode learning design supporting grounded study, senior-level explanations, and active recall challenges",
+    ],
+    responsibilities: [
+      "Architected modular FastAPI backend application with domain separation (app/api, app/rag, app/retrieval, app/ingestion, app/learning)",
+      "Engineered relational database schema and Alembic migrations across 11 persistence models",
+      "Configured PostgreSQL vector extension (pgvector) for chunk embedding storage and semantic similarity indexing",
+      "Implemented document ingestion foundation with PDF parsing, structural chunking, and content checksum verification",
+    ],
+    projectType: "AI System",
+    featured: true,
+    status: "Active Development",
+    repositoryVisibility: "public",
+    githubUrl: "https://github.com/piyush99755/RecallForge-AI",
+    caseStudy: {
+      overview:
+        "RecallForge AI is an active learning and technical study engine designed to search, synthesize, and evaluate knowledge across software project documentation, system architecture records, code snippets, and interview preparation materials.",
+      problem:
+        "When reviewing complex engineering domains, unstructured notes and generic AI chats lack grounded context from real projects, suffer from hallucinations without exact source citations, and fail to track which concepts a learner has actually mastered versus where knowledge gaps remain.",
+      solution:
+        "Building a dedicated personal study platform pairing a modular FastAPI backend with PostgreSQL and pgvector. Documents are ingested, versioned, and partitioned into semantically rich sections and chunks. A retrieval pipeline combines vector search with metadata filtering, feeding grounded context into study sessions, quiz generation, and active recall challenges that track concept progress over time.",
+      roleDescription:
+        "Solo architect and backend engineer leading architecture, database modeling, Alembic migrations, ingestion pipeline, and RAG retrieval design.",
+      architectureDescription:
+        "The platform adopts a modular monorepo architecture: apps/api hosts the FastAPI backend service interfacing with PostgreSQL (pgvector) via SQLAlchemy ORM; apps/web provides a Next.js 16 / React client application. Backend domains are structured into distinct service modules: ingestion, retrieval, RAG, and learning.",
+      architectureNodes: [
+        {
+          title: "Client Web App",
+          subtitle: "Next.js 16 / React",
+          items: [
+            "Study Workspace",
+            "Document Upload",
+            "Active Recall Challenge UI",
+            "Knowledge Gap Dashboard",
+          ],
+          type: "frontend",
+        },
+        {
+          title: "API Gateway & Routes",
+          subtitle: "FastAPI / Python",
+          items: [
+            "Asynchronous Endpoints",
+            "Pydantic Schemas",
+            "Domain Routers (/api/projects, /api/rag, /api/learning)",
+          ],
+          type: "backend",
+        },
+        {
+          title: "Ingestion & Chunker",
+          subtitle: "Parsing & Structure",
+          items: [
+            "PDF Parser",
+            "Heading & Section Extractor",
+            "Structural Chunker",
+            "Content Checksum Verification",
+          ],
+          type: "service",
+        },
+        {
+          title: "Retrieval & RAG Engine",
+          subtitle: "Dense & Sparse Search",
+          items: [
+            "pgvector Cosine Search",
+            "Reranker Interface",
+            "Grounded Context Assembly",
+            "Challenge Evaluator",
+          ],
+          type: "service",
+        },
+        {
+          title: "Persistence Layer",
+          subtitle: "PostgreSQL & pgvector",
+          items: [
+            "SQLAlchemy ORM",
+            "Alembic Migrations",
+            "11 Entity Models",
+            "Vector Embeddings",
+          ],
+          type: "database",
+        },
+      ],
+      coreWorkflow: [
+        {
+          stepNumber: 1,
+          title: "Document Upload & Checksum Hashing",
+          actor: "Learner",
+          action: "Uploads technical journal or PDF via web client",
+          technicalDetail:
+            "Backend computes SHA-256 checksum to enforce idempotency and avoid duplicate chunking across re-uploads.",
+        },
+        {
+          stepNumber: 2,
+          title: "Structural Parsing & Sectioning",
+          actor: "Ingestion Pipeline",
+          action: "Parses PDF and extracts hierarchical headings and text blocks",
+          technicalDetail:
+            "Deconstructs content into semantic sections preserving parent-child heading context.",
+        },
+        {
+          stepNumber: 3,
+          title: "Chunking & Vector Embedding",
+          actor: "Chunking Service",
+          action: "Splits sections into structurally bounded chunks and generates embeddings",
+          technicalDetail:
+            "Stores chunk records with metadata and inserts dense vector representations into pgvector.",
+        },
+        {
+          stepNumber: 4,
+          title: "Context-Grounded Querying",
+          actor: "RAG Engine",
+          action: "Executes similarity search and formats grounded context for study modes",
+          technicalDetail:
+            "Retrieves top-k chunks with confidence scoring and streams answers citing exact source sections.",
+        },
+        {
+          stepNumber: 5,
+          title: "Active Recall Challenge & Gap Tracking",
+          actor: "Learning Service",
+          action: "Generates quiz challenges and grades learner responses",
+          technicalDetail:
+            "Logs attempt scores, identifies concept deficiencies, and updates KnowledgeGap tracking records.",
+        },
+      ],
+      features: [
+        "IMPLEMENTED FOUNDATION — Modular FastAPI Backend: Scalable service architecture separating api, rag, retrieval, ingestion, and learning domains with async route execution.",
+        "IMPLEMENTED FOUNDATION — 11-Model Relational Database Foundation: SQLAlchemy models for Project, Document, DocumentVersion, Section, Chunk, ChunkEmbedding, StudyChallenge, ChallengeAttempt, ChallengeAttemptGap, ConceptProgress, and KnowledgeGap.",
+        "IMPLEMENTED FOUNDATION — Alembic Database Migrations: Version-controlled schema migrations managing tables, foreign keys, and PostgreSQL pgvector extension creation.",
+        "IMPLEMENTED FOUNDATION — Ingestion Pipeline Foundation: PyMuPDF document parsing, hierarchical heading extraction, structural paragraph/QA-unit chunking, and file storage with SHA-256 checksum deduplication.",
+        "IMPLEMENTED FOUNDATION — Semantic Retrieval & Grounded RAG: Dense vector similarity search via pgvector cosine distance, multi-mode prompts (beginner, interview, senior), and answer confidence scoring.",
+        "IMPLEMENTED FOUNDATION — Web Client Workspace Scaffold: Next.js App Router client with document library upload, polling status, and interactive study ask interface with clickable citations.",
+        "CURRENT ROADMAP — End-to-End Hybrid Search & Reranking Benchmarks: Integrating lexical BM25 with dense pgvector via Reciprocal Rank Fusion (RRF) and Cross-Encoder reranker evaluation suites.",
+        "CURRENT ROADMAP — Interactive Challenge Mode UI Runner: Complete interactive web quiz execution flow connecting the backend challenge evaluator to real-time learner sessions.",
+        "CURRENT ROADMAP — Automated Spaced Repetition Scheduling: Background worker automation managing Leitner-box review queues and interval transitions.",
+        "CURRENT ROADMAP — Multi-Format Ingestion & Expanded Workspaces: Ingestion support for source code trees, Markdown notes, multi-tenant team workspaces, and mobile study clients.",
+      ],
+      backendMechanisms: [
+        {
+          title: "Relational Schema with pgvector",
+          description:
+            "PostgreSQL models link projects down to granular chunks and vector embeddings, enabling both relational integrity and similarity search.",
+          keyTakeaway:
+            "Unifies structured entity relationships and vector embeddings within a single ACID-compliant database.",
+        },
+        {
+          title: "Deterministic Checksum Verification",
+          description:
+            "Computes cryptographic hashes of incoming document payloads before running ingestion pipelines.",
+          keyTakeaway:
+            "Prevents redundant re-indexing and eliminates duplicate chunk generation in vector storage.",
+        },
+        {
+          title: "Modular Service Decoupling",
+          description:
+            "Separates ingestion, vector retrieval, LLM prompt assembly, and learning analytics into dedicated Python modules.",
+          keyTakeaway:
+            "Allows independent testing, benchmarking, and optimization of individual RAG components.",
+        },
+      ],
+      dataPersistence: [
+        {
+          modelName: "Document / DocumentVersion",
+          purpose:
+            "Tracks document ownership, metadata, source file paths, and version history across updates.",
+          keyFieldsOrPatterns: ["id", "project_id", "title", "content_hash", "created_at"],
+        },
+        {
+          modelName: "Section / Chunk",
+          purpose:
+            "Stores hierarchical document sections and token-bounded text chunks with heading breadcrumbs.",
+          keyFieldsOrPatterns: ["id", "document_version_id", "heading", "content", "token_count"],
+        },
+        {
+          modelName: "ChunkEmbedding",
+          purpose:
+            "Stores dense vector embeddings with pgvector Vector type for semantic similarity search.",
+          keyFieldsOrPatterns: ["id", "chunk_id", "embedding", "model_name"],
+        },
+        {
+          modelName: "KnowledgeGap / ConceptProgress",
+          purpose:
+            "Tracks concept mastery levels, review queues, and specific knowledge gaps identified during challenges.",
+          keyFieldsOrPatterns: ["id", "concept_name", "mastery_score", "gap_severity", "last_reviewed_at"],
+        },
+      ],
+      engineeringDecisions: [
+        {
+          title: "PostgreSQL with pgvector vs Standalone Vector DB",
+          context:
+            "A study engine requires rich relational entities (users, projects, versions, quiz attempts) alongside dense vector search.",
+          decision:
+            "Adopted PostgreSQL with the pgvector extension managed via SQLAlchemy and Alembic instead of a separate vector-only database.",
+          rationale:
+            "Keeps all relational data, version history, and vector embeddings in a single ACID-compliant database, eliminating dual-write synchronization bugs and distributed transaction overhead.",
+        },
+        {
+          title: "FastAPI Backend with Modular Domain Architecture",
+          context:
+            "AI applications often interleave long-running parsing, async LLM streams, and synchronous database transactions.",
+          decision:
+            "Built the backend in FastAPI with Python, organizing functionality into distinct domains (ingestion, rag, retrieval, learning).",
+          rationale:
+            "Provides native async support, automated OpenAPI contract generation, and clean boundaries for testing retrieval pipelines independently from UI.",
+        },
+        {
+          title: "Transparent In-Progress Status Modeling",
+          context:
+            "The project is actively being developed and is not yet production-deployed.",
+          decision:
+            "Explicitly designated project status as 'Active Development' and separated verified foundation from roadmap capabilities.",
+          rationale:
+            "Maintains absolute portfolio credibility and evidence truthfulness while showcasing current systems engineering depth.",
+        },
+      ],
+      challenges: [
+        {
+          title: "Granular PDF Structural Chunking",
+          problem:
+            "Naive character-count chunking splits code blocks, headings, and cohesive conceptual explanations across chunk boundaries.",
+          rootCause: "Arbitrary sliding windows disregard document semantic hierarchy.",
+          solution:
+            "Implemented a two-pass parser extracting section headings first, then chunking within structural sections while preserving parent heading breadcrumbs.",
+        },
+        {
+          title: "Vector Dimension & Schema Synchronization",
+          problem:
+            "Changing embedding models or database environments requires reliable vector column indexing.",
+          rootCause: "pgvector requires specific index types (HNSW/IVFFlat) and dimension configurations.",
+          solution:
+            "Codified database schema in SQLAlchemy and managed migrations via Alembic scripts with explicit vector extension checks.",
+        },
+      ],
+      reliabilityPatterns: [
+        "SHA-256 document hashing for idempotent ingestion and deduplication",
+        "Alembic version-controlled database schema migrations",
+        "Modular Python package boundaries isolating retrieval from ingestion",
+        "Exact source citation linking with chunk and section identifiers",
+      ],
+      securityConsiderations: [
+        "File upload validation checking MIME types, size thresholds, and file extensions",
+        "Environment variable segregation for database credentials and AI provider keys",
+        "Scoped project isolation preventing cross-project document leakage",
+      ],
+      integrations: [
+        { name: "FastAPI", purpose: "Asynchronous backend web framework", category: "Backend" },
+        { name: "PostgreSQL & pgvector", purpose: "Relational database and vector similarity engine", category: "Database" },
+        { name: "SQLAlchemy & Alembic", purpose: "Python ORM and schema migration manager", category: "Data Access" },
+        { name: "Next.js", purpose: "Frontend client application workspace", category: "Frontend" },
+      ],
+      lessonsLearned: [
+        "Modeling relational data and vector embeddings in a unified database dramatically simplifies multi-entity querying.",
+        "Structuring documents into hierarchical sections before vector chunking significantly improves retrieval relevance for technical documentation.",
+        "Clearly articulating what is built today versus what is planned on the roadmap builds genuine technical credibility.",
       ],
     },
   },

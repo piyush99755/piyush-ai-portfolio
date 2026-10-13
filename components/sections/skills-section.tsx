@@ -43,23 +43,58 @@ export function SkillsSection() {
                   </p>
                 </CardHeader>
 
-                <CardContent className="pt-2 space-y-2">
-                  <div className="flex flex-wrap gap-2">
-                    {categorySkills.map((skill) => (
-                      <Badge
-                        key={skill.name}
-                        variant="secondary"
-                        className="bg-secondary/70 text-secondary-foreground text-xs py-1 px-2.5 font-normal flex items-center gap-1.5"
-                      >
-                        <span>{skill.name}</span>
-                        {skill.level && (
-                          <span className="text-[10px] text-muted-foreground/80 font-mono">
-                            • {skill.level}
-                          </span>
-                        )}
-                      </Badge>
-                    ))}
-                  </div>
+                <CardContent className="pt-2 space-y-4">
+                  {categorySkills.filter((s) => s.tier === "primary").length > 0 && (
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-primary/80 font-mono">
+                        Primary Stack
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {categorySkills
+                          .filter((s) => s.tier === "primary")
+                          .map((skill) => (
+                            <Badge
+                              key={skill.name}
+                              variant="secondary"
+                              className="bg-secondary/90 text-secondary-foreground text-xs py-1 px-2.5 font-medium border border-primary/20 flex items-center gap-1.5 shadow-sm"
+                            >
+                              <span>{skill.name}</span>
+                              {skill.level && (
+                                <span className="text-[10px] text-muted-foreground font-mono">
+                                  • {skill.level}
+                                </span>
+                              )}
+                            </Badge>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {categorySkills.filter((s) => s.tier !== "primary").length > 0 && (
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70 font-mono">
+                        Foundational & Supporting
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {categorySkills
+                          .filter((s) => s.tier !== "primary")
+                          .map((skill) => (
+                            <Badge
+                              key={skill.name}
+                              variant="outline"
+                              className="bg-muted/30 text-muted-foreground border-border/70 text-xs py-0.5 px-2 font-normal flex items-center gap-1.5"
+                            >
+                              <span>{skill.name}</span>
+                              {skill.level && (
+                                <span className="text-[10px] text-muted-foreground/60 font-mono">
+                                  • {skill.level}
+                                </span>
+                              )}
+                            </Badge>
+                          ))}
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             );

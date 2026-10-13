@@ -19,17 +19,19 @@ const CONTEXTUAL_PRONOUNS = new Set([
 const ALIAS_MAP: Record<string, string[]> = {
   twilio: ["myfelipe", "telephony", "sms", "voice", "calls"],
   retell: ["myfelipe", "voice", "receptionist", "agent", "audio"],
-  rag: ["career", "copilot", "retrieval", "augmented", "context", "llm"],
+  rag: ["career", "copilot", "retrieval", "augmented", "context", "llm", "recallforge"],
   n8n: ["ecommerce", "automation", "workflow", "hub", "triggers"],
   stripe: ["myfelipe", "billing", "payment", "subscriptions"],
   calendar: ["myfelipe", "google", "oauth", "booking", "appointments"],
-  fastapi: ["python", "career", "backend", "async"],
+  fastapi: ["python", "career", "backend", "async", "recallforge"],
   express: ["node", "myfelipe", "backend", "mongodb"],
   prisma: ["ecommerce", "postgresql", "transaction", "database"],
-  postgres: ["postgresql", "ecommerce", "database", "relational"],
+  postgres: ["postgresql", "ecommerce", "database", "relational", "recallforge", "pgvector"],
+  postgresql: ["postgres", "database", "relational", "sql", "pgvector"],
   mongodb: ["myfelipe", "database", "tenant", "schemas"],
-  ai: ["rag", "voice", "retell", "llm", "copilot", "myfelipe", "groq"],
-  backend: ["express", "fastapi", "node", "python", "api", "server"],
+  ai: ["rag", "voice", "retell", "llm", "copilot", "myfelipe", "groq", "recallforge"],
+  backend: ["express", "fastapi", "node", "python", "api", "server", "rest"],
+  frontend: ["html", "css", "javascript", "react", "nextjs", "ui", "responsive"],
   saas: ["myfelipe", "ecommerce", "product", "stripe"],
   automation: ["n8n", "ecommerce", "workflow", "twilio", "sms"],
   email: ["contact", "piyushtadvi4@gmail.com", "reach out", "mail", "hire", "address"],
@@ -37,6 +39,19 @@ const ALIAS_MAP: Record<string, string[]> = {
   code: ["github", "repository", "project", "source", "link"],
   github: ["repository", "code", "link", "url", "source"],
   repo: ["github", "repository", "code"],
+  html: ["html5", "markup", "webpage", "web development", "frontend", "semantic"],
+  html5: ["html", "markup", "semantic", "frontend", "web development"],
+  css: ["css3", "styling", "responsive", "frontend", "layout", "tailwind"],
+  css3: ["css", "styling", "responsive", "frontend", "layout"],
+  javascript: ["js", "es6", "frontend", "browser", "web development", "typescript"],
+  js: ["javascript", "es6", "frontend", "browser"],
+  sql: ["postgresql", "relational", "database", "prisma", "queries"],
+  responsive: ["css", "frontend", "mobile", "layout", "tailwind"],
+  rest: ["api", "endpoints", "fastapi", "express", "backend"],
+  study: ["recallforge", "engine", "learning", "rag", "active development", "fastapi"],
+  recallforge: ["study", "engine", "learning", "fastapi", "postgres", "alembic", "pgvector"],
+  building: ["recallforge", "study", "engine", "active development", "personal"],
+  currently: ["building", "recallforge", "study", "engine", "active development"],
 };
 
 export interface ScoredDocument {
@@ -76,6 +91,7 @@ export function retrieveKnowledge(
       if (historyText.includes("myfelipe")) mentions.push("myfelipe");
       if (historyText.includes("ecommerce") || historyText.includes("e-commerce")) mentions.push("ecommerce");
       if (historyText.includes("career") || historyText.includes("copilot")) mentions.push("career copilot");
+      if (historyText.includes("recallforge") || historyText.includes("study engine")) mentions.push("recallforge");
 
       if (mentions.length > 0) {
         effectiveQuery = `${mentions.join(" ")} ${effectiveQuery}`;

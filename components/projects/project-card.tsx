@@ -27,9 +27,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 <span>Private</span>
               </Badge>
             )}
-            <Badge variant="secondary" className="text-[11px] font-normal">
-              {project.status}
-            </Badge>
+            {project.status === "Active Development" ? (
+              <Badge variant="outline" className="border-cyan-500/50 bg-cyan-950/40 text-cyan-300 text-[11px] font-medium flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                <span>Active Development</span>
+              </Badge>
+            ) : (
+              <Badge variant="secondary" className="text-[11px] font-normal">
+                {project.status}
+              </Badge>
+            )}
           </div>
         </div>
 
@@ -104,11 +111,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`View ${project.title} live demo`}
+                aria-label={`View ${project.title} ${project.slug === "myfelipe-ai-receptionist" ? "live site" : "live demo"}`}
                 className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-primary/40 text-primary hover:bg-primary/10 transition-colors"
               >
                 <ExternalLink className="h-3.5 w-3.5" />
-                <span>Live Demo</span>
+                <span>{project.slug === "myfelipe-ai-receptionist" ? "Live Site" : "Live Demo"}</span>
               </a>
             )}
           </div>

@@ -221,9 +221,16 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           <Badge variant="outline" className="border-primary/40 text-primary font-medium">
             {project.category}
           </Badge>
-          <Badge variant="secondary" className="font-normal">
-            {project.status}
-          </Badge>
+          {project.status === "Active Development" ? (
+            <Badge variant="outline" className="border-cyan-500/50 bg-cyan-950/40 text-cyan-300 font-medium flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              <span>Active Development</span>
+            </Badge>
+          ) : (
+            <Badge variant="secondary" className="font-normal">
+              {project.status}
+            </Badge>
+          )}
           <Badge variant="outline" className="font-mono text-xs text-muted-foreground">
             {project.projectType}
           </Badge>
@@ -242,6 +249,18 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
           {project.shortDescription}
         </p>
+
+        {project.status === "Active Development" && (
+          <div className="rounded-lg border border-cyan-500/30 bg-cyan-950/20 p-4 text-sm text-cyan-200/90 flex items-start gap-3">
+            <Sparkles className="h-5 w-5 text-cyan-400 shrink-0 mt-0.5" />
+            <div>
+              <p className="font-semibold text-cyan-300">Active Development Project</p>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                This project is currently in active development. The database schema, SQLAlchemy models, Alembic migrations, and FastAPI backend foundation are implemented and verified in the codebase. Document ingestion, hybrid search, and interactive learning modes represent active roadmap work.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Banner Thumbnail */}
         <div className="rounded-xl overflow-hidden border border-border/60 shadow-md">
@@ -266,7 +285,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-primary text-primary-foreground shadow hover:bg-primary/90 transition-colors"
               >
-                <ExternalLink className="h-3.5 w-3.5" /> Live Demo
+                <ExternalLink className="h-3.5 w-3.5" /> {project.slug === "myfelipe-ai-receptionist" ? "Live Site" : "Live Demo"}
               </a>
             )}
 
