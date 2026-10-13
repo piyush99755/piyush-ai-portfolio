@@ -52,6 +52,21 @@ const ALIAS_MAP: Record<string, string[]> = {
   recallforge: ["study", "engine", "learning", "fastapi", "postgres", "alembic", "pgvector"],
   building: ["recallforge", "study", "engine", "active development", "personal"],
   currently: ["building", "recallforge", "study", "engine", "active development"],
+  teach: ["engineering", "full-stack", "skills", "architecture", "explain"],
+  teaching: ["engineering", "full-stack", "skills", "architecture", "explain"],
+  taught: ["experience", "background", "profile", "engineering"],
+  mentor: ["engineering", "architecture", "full-stack", "skills"],
+  mentoring: ["engineering", "architecture", "full-stack", "skills"],
+  explain: ["architecture", "engineering", "decisions", "skills"],
+  explaining: ["architecture", "engineering", "decisions", "skills"],
+  videos: ["overview", "projects", "architecture", "demo"],
+  video: ["overview", "projects", "architecture", "demo"],
+  university: ["background", "profile", "education", "engineering"],
+  students: ["background", "profile", "education", "engineering"],
+  student: ["background", "profile", "education", "engineering"],
+  course: ["background", "education", "engineering", "profile"],
+  courses: ["background", "education", "engineering", "profile"],
+  programming: ["software", "engineering", "developer", "code", "full-stack"],
 };
 
 export interface ScoredDocument {

@@ -1,6 +1,7 @@
 import { ChatMessage } from "@/types/ai";
 import { SourceBadge } from "./source-badge";
 import { Bot, User } from "lucide-react";
+import { MarkdownRenderer } from "./markdown-renderer";
 
 interface MessageItemProps {
   message: ChatMessage;
@@ -32,9 +33,13 @@ export function MessageItem({ message }: MessageItemProps) {
           <span>{isUser ? "You" : "Ask Piyush AI"}</span>
         </div>
 
-        <div className="text-xs sm:text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed space-y-2">
-          {message.content}
-        </div>
+        {isUser ? (
+          <div className="text-xs sm:text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed space-y-2">
+            {message.content}
+          </div>
+        ) : (
+          <MarkdownRenderer content={message.content} />
+        )}
 
         {!isUser && message.sources && message.sources.length > 0 && (
           <div className="pt-2 border-t border-border/40 space-y-1.5">
