@@ -114,10 +114,14 @@ export function generateKnowledgeCorpus(): KnowledgeDocument[] {
       : project.repositoryVisibility === "private"
       ? `Private Client Repository (Code is confidential to client SaaS product)`
       : "";
-    const liveInfo = project.liveUrl ? `Live Project: ${project.liveUrl}.` : "";
+    const liveInfo = project.liveUrl
+      ? `Live Application URL: ${project.liveUrl} (verified live link).`
+      : "";
     const statusNote =
       project.status === "Active Development"
         ? `Project Status: ACTIVE DEVELOPMENT (Under active engineering; not yet production deployed).`
+        : project.status === "Deployed" || project.status === "Live"
+        ? `Project Status: DEPLOYED (Live and deployed on public cloud infrastructure).`
         : `Project Status: ${project.status}.`;
 
     const projectKeywords = new Set<string>([
@@ -133,6 +137,30 @@ export function generateKnowledgeCorpus(): KnowledgeDocument[] {
       "url",
       ...project.technologies.map((t) => t.toLowerCase()),
     ]);
+
+    if (project.liveUrl) {
+      projectKeywords.add("live");
+      projectKeywords.add("live app");
+      projectKeywords.add("live link");
+      projectKeywords.add("demo");
+      projectKeywords.add("try");
+      projectKeywords.add("deployed");
+      projectKeywords.add("online");
+    }
+
+    if (project.id === "personal-ai-study-engine") {
+      projectKeywords.add("recallforge");
+      projectKeywords.add("study engine");
+      projectKeywords.add("study");
+      projectKeywords.add("engine");
+      projectKeywords.add("learning");
+      projectKeywords.add("review");
+      projectKeywords.add("spaced repetition");
+      projectKeywords.add("challenge");
+      projectKeywords.add("quiz");
+      projectKeywords.add("pwa");
+      projectKeywords.add("gap tracking");
+    }
 
     if (project.status === "Active Development") {
       projectKeywords.add("active development");

@@ -82,6 +82,7 @@ export function sanitizeAnswerUrls(text: string): string {
   const knownRepos = [
     "https://github.com/piyush99755/ai-ecommerce-automation-hub",
     "https://github.com/piyush99755/career-copilot-ai",
+    "https://github.com/piyush99755/RecallForge-AI",
     "https://github.com/piyush99755",
   ];
 

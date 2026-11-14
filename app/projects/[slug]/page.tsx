@@ -226,6 +226,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
               <span>Active Development</span>
             </Badge>
+          ) : project.status === "Deployed" || project.status === "Live" ? (
+            <Badge variant="outline" className="border-emerald-500/50 bg-emerald-950/40 text-emerald-300 font-medium flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>{project.status}</span>
+            </Badge>
           ) : (
             <Badge variant="secondary" className="font-normal">
               {project.status}
@@ -285,7 +290,12 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-primary text-primary-foreground shadow hover:bg-primary/90 transition-colors"
               >
-                <ExternalLink className="h-3.5 w-3.5" /> {project.slug === "myfelipe-ai-receptionist" ? "Live Site" : "Live Demo"}
+                <ExternalLink className="h-3.5 w-3.5" />{" "}
+                {project.slug === "myfelipe-ai-receptionist"
+                  ? "Live Site"
+                  : project.slug === "personal-ai-study-engine"
+                  ? "Live App"
+                  : "Live Demo"}
               </a>
             )}
 

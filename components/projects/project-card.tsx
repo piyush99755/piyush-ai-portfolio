@@ -32,6 +32,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                 <span>Active Development</span>
               </Badge>
+            ) : project.status === "Deployed" || project.status === "Live" ? (
+              <Badge variant="outline" className="border-emerald-500/50 bg-emerald-950/40 text-emerald-300 text-[11px] font-medium flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>{project.status}</span>
+              </Badge>
             ) : (
               <Badge variant="secondary" className="text-[11px] font-normal">
                 {project.status}
@@ -115,7 +120,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-primary/40 text-primary hover:bg-primary/10 transition-colors"
               >
                 <ExternalLink className="h-3.5 w-3.5" />
-                <span>{project.slug === "myfelipe-ai-receptionist" ? "Live Site" : "Live Demo"}</span>
+                <span>
+                  {project.slug === "myfelipe-ai-receptionist"
+                    ? "Live Site"
+                    : project.slug === "personal-ai-study-engine"
+                    ? "Live App"
+                    : "Live Demo"}
+                </span>
               </a>
             )}
           </div>

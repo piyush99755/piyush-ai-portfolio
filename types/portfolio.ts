@@ -51,6 +51,8 @@ export type ProjectCategory =
 
 export type ProjectStatus =
   | "Production"
+  | "Deployed"
+  | "Live"
   | "Active Development"
   | "Completed Concept";
 

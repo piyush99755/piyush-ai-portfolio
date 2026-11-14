@@ -74,6 +74,79 @@ function checkRepoIntent(message: string): {
   return { isRepoQuery: false };
 }
 
+function checkLiveLinkIntent(message: string): {
+  isLiveQuery: boolean;
+  projectKey?: "ecommerce-hub" | "career-copilot" | "myfelipe-ai" | "study-engine";
+} {
+  const msgLower = message.toLowerCase();
+
+  const liveKeywords = [
+    "live link",
+    "live app",
+    "live demo",
+    "live url",
+    "demo link",
+    "app link",
+    "where can i try",
+    "can i try",
+    "try it",
+    "try recallforge",
+    "try the study engine",
+    "is it live",
+    "deployed app",
+    "deployed link",
+    "live web app",
+    "test the app",
+    "open the app",
+    "access the app",
+    "access recallforge",
+    "link to the app",
+    "use recallforge",
+    "try the app",
+  ];
+
+  const hasLiveKeyword = liveKeywords.some((kw) => msgLower.includes(kw));
+  if (!hasLiveKeyword) {
+    return { isLiveQuery: false };
+  }
+
+  if (
+    msgLower.includes("recallforge") ||
+    msgLower.includes("recall forge") ||
+    msgLower.includes("study engine") ||
+    msgLower.includes("personal ai study")
+  ) {
+    return { isLiveQuery: true, projectKey: "study-engine" };
+  }
+
+  if (
+    msgLower.includes("ecommerce") ||
+    msgLower.includes("e-commerce") ||
+    msgLower.includes("automation hub") ||
+    msgLower.includes("storefront")
+  ) {
+    return { isLiveQuery: true, projectKey: "ecommerce-hub" };
+  }
+
+  if (
+    msgLower.includes("career copilot") ||
+    msgLower.includes("career-copilot") ||
+    msgLower.includes("career ai")
+  ) {
+    return { isLiveQuery: true, projectKey: "career-copilot" };
+  }
+
+  if (
+    msgLower.includes("myfelipe") ||
+    msgLower.includes("receptionist") ||
+    msgLower.includes("felipe")
+  ) {
+    return { isLiveQuery: true, projectKey: "myfelipe-ai" };
+  }
+
+  return { isLiveQuery: false };
+}
+
 export async function POST(req: Request) {
   try {
     const body: ChatApiRequest = await req.json();
@@ -155,7 +228,7 @@ export async function POST(req: Request) {
       if (repoIntent.projectKey === "study-engine") {
         return NextResponse.json({
           answer:
-            "The source code for the Personal AI Study Engine (RecallForge AI) is available on GitHub:\n\nhttps://github.com/piyush99755/RecallForge-AI\n\nPlease note that this project is currently in active development.",
+            "The source code for the Personal AI Study Engine (RecallForge AI) is available on GitHub:\n\nhttps://github.com/piyush99755/RecallForge-AI\n\nThe deployed live web application is accessible at:\nhttps://recall-forge-ai.vercel.app/review",
           sources: [
             {
               title: "Personal AI Study Engine (RecallForge AI)",
@@ -177,6 +250,74 @@ export async function POST(req: Request) {
               title: "Piyush Tadvi — GitHub Profile",
               type: "profile",
               href: "/#about",
+            },
+          ] as SourceCitation[],
+          retrievedDocsCount: 1,
+        });
+      }
+    }
+
+    // 2.5 Deterministic Live-Link Intent Bypass
+    const liveIntent = checkLiveLinkIntent(message);
+    if (liveIntent.isLiveQuery && liveIntent.projectKey) {
+      if (liveIntent.projectKey === "study-engine") {
+        return NextResponse.json({
+          answer:
+            "The deployed live web application for the Personal AI Study Engine (RecallForge AI) is available at:\n\nhttps://recall-forge-ai.vercel.app/review\n\nThe source code is also accessible on GitHub:\nhttps://github.com/piyush99755/RecallForge-AI",
+          sources: [
+            {
+              title: "Personal AI Study Engine (RecallForge AI)",
+              type: "project-overview",
+              projectSlug: "personal-ai-study-engine",
+              href: "/projects/personal-ai-study-engine",
+            },
+          ] as SourceCitation[],
+          retrievedDocsCount: 1,
+        });
+      }
+
+      if (liveIntent.projectKey === "ecommerce-hub") {
+        return NextResponse.json({
+          answer:
+            "The live application for the AI E-commerce Automation Hub is available at:\n\nhttps://ai-ecommerce-hub-production.up.railway.app\n\nThe source code is available on GitHub:\nhttps://github.com/piyush99755/ai-ecommerce-automation-hub",
+          sources: [
+            {
+              title: "AI E-commerce Automation Hub",
+              type: "project-overview",
+              projectSlug: "ai-ecommerce-automation-hub",
+              href: "/projects/ai-ecommerce-automation-hub",
+            },
+          ] as SourceCitation[],
+          retrievedDocsCount: 1,
+        });
+      }
+
+      if (liveIntent.projectKey === "career-copilot") {
+        return NextResponse.json({
+          answer:
+            "The live application for Career Copilot AI is available at:\n\nhttps://career-copilot-ai-production.up.railway.app\n\nThe source code is available on GitHub:\nhttps://github.com/piyush99755/career-copilot-ai",
+          sources: [
+            {
+              title: "Career Copilot AI",
+              type: "project-overview",
+              projectSlug: "career-copilot-ai",
+              href: "/projects/career-copilot-ai",
+            },
+          ] as SourceCitation[],
+          retrievedDocsCount: 1,
+        });
+      }
+
+      if (liveIntent.projectKey === "myfelipe-ai") {
+        return NextResponse.json({
+          answer:
+            "MyFelipe AI Receptionist was developed as a proprietary production solution for Felipe's Barbershop and does not have a public demo or live URL.\n\nYou can review the comprehensive architectural case study and metrics here:\nhttps://piyushtadvi.co.uk/projects/myfelipe-ai-receptionist",
+          sources: [
+            {
+              title: "MyFelipe AI Receptionist SaaS",
+              type: "project-overview",
+              projectSlug: "myfelipe-ai-receptionist",
+              href: "/projects/myfelipe-ai-receptionist",
             },
           ] as SourceCitation[],
           retrievedDocsCount: 1,

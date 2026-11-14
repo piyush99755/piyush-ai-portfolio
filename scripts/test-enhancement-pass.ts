@@ -64,11 +64,20 @@ assert(
 const studyProject = projectsData.find((p) => p.id === "personal-ai-study-engine");
 assert(
   studyProject !== undefined &&
-    studyProject.status === "Active Development" &&
+    studyProject.status === "Deployed" &&
     studyProject.githubUrl === "https://github.com/piyush99755/RecallForge-AI" &&
-    !studyProject.liveUrl,
-  "Personal AI Study Engine (RecallForge AI) registered as Active Development with verified GitHub",
-  `Status: ${studyProject?.status} | GitHub: ${studyProject?.githubUrl}`
+    studyProject.liveUrl === "https://recall-forge-ai.vercel.app/review",
+  "Personal AI Study Engine (RecallForge AI) registered as Deployed with verified GitHub and live URL",
+  `Status: ${studyProject?.status} | GitHub: ${studyProject?.githubUrl} | Live URL: ${studyProject?.liveUrl}`
+);
+
+const hasOutdatedWording =
+  JSON.stringify(projectsData).includes("not yet production-deployed") ||
+  JSON.stringify(projectsData).includes("not production deployed");
+assert(
+  !hasOutdatedWording,
+  "Projects dataset contains no outdated 'not production deployed' claims for RecallForge",
+  `Outdated claims present: ${hasOutdatedWording}`
 );
 
 // 3. Deeper Case Study Data Model Audit
@@ -175,7 +184,7 @@ assert(
   `Top Score: ${myFelipeRetrieval.topScore}`
 );
 
-// 6. Study Engine Repository Retrieval Audit
+// 6. Study Engine Repository & Live App Retrieval Audit
 const mockStudyMessage = "Where can I see the code for the Study Engine?";
 const studyRetrieval = retrieveKnowledge(mockStudyMessage);
 assert(
@@ -183,6 +192,15 @@ assert(
     studyRetrieval.documents.some((d) => d.content.includes("https://github.com/piyush99755/RecallForge-AI")),
   "Ask Piyush retrieval finds verified GitHub URL for RecallForge Study Engine",
   `Top Score: ${studyRetrieval.topScore}`
+);
+
+const mockStudyLiveMessage = "Where can I try RecallForge AI?";
+const studyLiveRetrieval = retrieveKnowledge(mockStudyLiveMessage);
+assert(
+  studyLiveRetrieval.hasSufficientEvidence &&
+    studyLiveRetrieval.documents.some((d) => d.content.includes("https://recall-forge-ai.vercel.app/review")),
+  "Ask Piyush retrieval finds verified live URL for RecallForge Study Engine",
+  `Top Score: ${studyLiveRetrieval.topScore}`
 );
 
 // 7. Foundational Skills Retrieval Audit
@@ -241,13 +259,15 @@ assert(
   `Top Score: ${k8sQuery.topScore} (Threshold: 12)`
 );
 
-// 8. Study Engine Active Development Retrieval Audit
-console.log("\n--- STUDY ENGINE (IN-PROGRESS) RETRIEVAL AUDIT ---");
+// 8. Study Engine Deployed Platform Retrieval Audit
+console.log("\n--- STUDY ENGINE (DEPLOYED PLATFORM) RETRIEVAL AUDIT ---");
 const currentBuildingQuery = retrieveKnowledge("What is Piyush currently building?");
 assert(
   currentBuildingQuery.hasSufficientEvidence &&
-    currentBuildingQuery.documents.some((d) => d.content.includes("Active Development") || d.title.includes("Study Engine")),
-  "Ask Piyush retrieval identifies Personal AI Study Engine as currently building / active development",
+    currentBuildingQuery.documents.some(
+      (d) => d.content.includes("RecallForge") || d.title.includes("Study Engine")
+    ),
+  "Ask Piyush retrieval identifies Personal AI Study Engine as currently building / active platform",
   `Top Score: ${currentBuildingQuery.topScore}`
 );
 
