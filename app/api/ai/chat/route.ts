@@ -16,11 +16,15 @@ function checkRepoIntent(message: string): {
     "source code",
     "code link",
     "where can i see the code",
+    "where can i see his code",
     "see the code",
+    "see his code",
     "show me the code",
+    "show me his code",
     "code for",
     "link to the code",
     "view the code",
+    "view his code",
     "view code",
   ];
 
@@ -63,15 +67,7 @@ function checkRepoIntent(message: string): {
     return { isRepoQuery: true, projectKey: "myfelipe-ai" };
   }
 
-  if (
-    msgLower.includes("github") ||
-    msgLower.includes("profile") ||
-    msgLower.includes("repositories")
-  ) {
-    return { isRepoQuery: true, projectKey: "profile" };
-  }
-
-  return { isRepoQuery: false };
+  return { isRepoQuery: true, projectKey: "profile" };
 }
 
 function checkLiveLinkIntent(message: string): {
@@ -244,7 +240,7 @@ export async function POST(req: Request) {
       if (repoIntent.projectKey === "profile") {
         return NextResponse.json({
           answer:
-            "Piyush's public GitHub profile and code repositories are available at:\n\nhttps://github.com/piyush99755",
+            "You can view Piyush's public repositories on GitHub:\n\nhttps://github.com/piyush99755",
           sources: [
             {
               title: "Piyush Tadvi — GitHub Profile",

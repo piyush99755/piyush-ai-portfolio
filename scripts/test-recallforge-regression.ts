@@ -151,6 +151,50 @@ async function runRecallForgeRegressionCheck() {
       expectedCheck: (ans: string) => ans.includes("https://github.com/piyush99755/RecallForge-AI"),
       label: "Exact repo request yields canonical GitHub URL",
     },
+    {
+      query: "Where can I see the source code?",
+      expectedCheck: (ans: string) =>
+        ans.includes("https://github.com/piyush99755") &&
+        !ans.includes("https://github.com/piyush99755/"),
+      label: "Generic source-code query yields canonical GitHub profile URL",
+    },
+    {
+      query: "Where is his GitHub?",
+      expectedCheck: (ans: string) =>
+        ans.includes("https://github.com/piyush99755") &&
+        !ans.includes("https://github.com/piyush99755/"),
+      label: "Generic GitHub query yields canonical GitHub profile URL",
+    },
+    {
+      query: "Show me his repositories",
+      expectedCheck: (ans: string) =>
+        ans.includes("https://github.com/piyush99755") &&
+        !ans.includes("https://github.com/piyush99755/"),
+      label: "Generic repositories query yields canonical GitHub profile URL",
+    },
+    {
+      query: "Where can I see his code?",
+      expectedCheck: (ans: string) =>
+        ans.includes("https://github.com/piyush99755") &&
+        !ans.includes("https://github.com/piyush99755/"),
+      label: "Generic his-code query yields canonical GitHub profile URL",
+    },
+    {
+      query: "Where is the Career Copilot repository?",
+      expectedCheck: (ans: string) => ans.includes("https://github.com/piyush99755/career-copilot-ai"),
+      label: "Career Copilot project-specific repo intent unchanged",
+    },
+    {
+      query: "Where is the E-commerce Hub source code?",
+      expectedCheck: (ans: string) => ans.includes("https://github.com/piyush99755/ai-ecommerce-automation-hub"),
+      label: "E-commerce Hub project-specific repo intent unchanged",
+    },
+    {
+      query: "Where is the MyFelipe source code?",
+      expectedCheck: (ans: string) =>
+        ans.toLowerCase().includes("private") && !ans.includes("github.com"),
+      label: "MyFelipe private repository intent unchanged",
+    },
   ];
 
   for (let i = 0; i < testIntents.length; i++) {
