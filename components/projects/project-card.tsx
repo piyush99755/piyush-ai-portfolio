@@ -116,7 +116,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`View ${project.title} ${project.slug === "myfelipe-ai-receptionist" ? "live site" : "live demo"}`}
+                aria-label={`View ${project.title} ${
+                  project.slug === "myfelipe-ai-receptionist"
+                    ? "live site"
+                    : project.slug === "personal-ai-study-engine"
+                    ? "live app"
+                    : "live demo"
+                }`}
                 className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-primary/40 text-primary hover:bg-primary/10 transition-colors"
               >
                 <ExternalLink className="h-3.5 w-3.5" />

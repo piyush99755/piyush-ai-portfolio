@@ -427,6 +427,314 @@ export const projectsData: Project[] = [
     },
   },
   {
+    id: "personal-ai-study-engine",
+    slug: "personal-ai-study-engine",
+    title: "Personal AI Study Engine (RecallForge AI)",
+    shortDescription:
+      "Deployed personal AI study and knowledge-retrieval engine featuring hybrid search (pgvector + lexical RRF), LLM reranking, active-recall challenges, and adaptive spaced-repetition review queues.",
+    longDescription:
+      "RecallForge AI is a deployed personal AI study and knowledge-retrieval platform for learning from technical documents, project journals, and engineering documentation through grounded search, source-backed answers, and active-recall workflows. Built on a modular FastAPI backend and Next.js frontend, it leverages Supabase PostgreSQL with pgvector, hybrid search (dense + lexical RRF), LLM reranking, and adaptive spaced-repetition challenge cycles.",
+    category: "AI & Automation",
+    technologies: [
+      "FastAPI",
+      "Python",
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL",
+      "Supabase",
+      "pgvector",
+      "SQLAlchemy",
+      "Alembic",
+      "RAG Architecture",
+      "Tailwind CSS",
+      "Render",
+      "Vercel",
+    ],
+    highlights: [
+      "Deployed cloud architecture pairing Next.js on Vercel with a containerized FastAPI backend on Render",
+      "Hybrid search combining pgvector dense cosine similarity with sparse lexical search via Reciprocal Rank Fusion (RRF)",
+      "Adaptive spaced-repetition review queue and automated knowledge-gap extraction from challenge attempts",
+      "Mobile-responsive PWA experience with web manifest, standalone display mode, and touch icon support",
+    ],
+    responsibilities: [
+      "Architected full-stack platform across Next.js frontend, FastAPI backend, and Supabase PostgreSQL data layer",
+      "Engineered hybrid search engine combining pgvector dense embeddings with sparse lexical ranking via RRF (k=60)",
+      "Implemented active recall challenge system, automated evaluation pipeline, and knowledge-gap tracking service",
+      "Configured secure cloud deployment across Vercel, Render, and Supabase with personal Bearer token access control",
+    ],
+    projectType: "AI System",
+    featured: true,
+    status: "Deployed",
+    repositoryVisibility: "public",
+    githubUrl: "https://github.com/piyush99755/RecallForge-AI",
+    liveUrl: "https://recall-forge-ai.vercel.app/review",
+    thumbnail: "/projects/recallforge/thumbnail.png",
+    thumbnailAlt: "RecallForge AI personal study engine interface and purple brand visual",
+    poster: "/projects/recallforge/poster.png",
+    posterAlt: "RecallForge AI study engine showing grounded retrieval, learning, and review workflows",
+    icon: "/projects/recallforge/project-icon.png",
+    ogImage: "/projects/recallforge/og.png",
+    caseStudy: {
+      overview:
+        "RecallForge AI is a deployed personal AI study and knowledge-retrieval platform designed to search, synthesize, and evaluate knowledge across software project documentation, system architecture records, code snippets, and technical interview materials.",
+      problem:
+        "When studying complex engineering domains, unstructured notes and generic AI chats lack grounded context from real project records, suffer from hallucinations without exact source citations, and fail to track which concepts a learner has actually mastered versus where knowledge gaps remain.",
+      solution:
+        "Architected and deployed a dedicated personal study platform pairing a Next.js frontend with a FastAPI backend and Supabase PostgreSQL (pgvector). Technical PDFs are ingested, versioned, and partitioned into semantically rich sections and chunks with SHA-256 deduplication. A hybrid retrieval pipeline combines dense vector search with lexical ranking and LLM reranking, feeding grounded context into study sessions, multi-mode Q&A, and active recall challenges with spaced-repetition review tracking.",
+      roleDescription:
+        "Solo architect and full-stack engineer leading frontend, backend, database modeling, Alembic migrations, ingestion pipeline, hybrid RAG retrieval, and cloud deployment.",
+      architectureDescription:
+        "The platform adopts a modular monorepo architecture: apps/api hosts the containerized FastAPI backend deployed on Render, interfacing with Supabase PostgreSQL (pgvector) and Supabase Storage; apps/web provides a Next.js 15 App Router client application deployed on Vercel with mobile-responsive PWA support. Backend domains are structured into distinct service modules: ingestion, retrieval, RAG, and learning.",
+      architectureNodes: [
+        {
+          title: "Client Web App & PWA",
+          subtitle: "Next.js 15 / React / Vercel",
+          items: [
+            "Daily Study Cockpit (Dashboard)",
+            "Interactive Concept Review Workspace",
+            "Grounded Ask Interface with Citations",
+            "Document Library & Upload",
+            "Mobile-Responsive PWA with Web Manifest",
+          ],
+          type: "frontend",
+        },
+        {
+          title: "API Gateway & Security",
+          subtitle: "FastAPI / Render",
+          items: [
+            "Asynchronous Endpoints",
+            "Personal Bearer Token Auth Gate",
+            "Pydantic Validation Schemas",
+            "CORS & Health Check Probes",
+          ],
+          type: "backend",
+        },
+        {
+          title: "Ingestion & Storage",
+          subtitle: "PyMuPDF & Supabase Storage",
+          items: [
+            "PDF Parser & Hierarchical Sectioning",
+            "Structural Paragraph & QA Chunker",
+            "SHA-256 Checksum Deduplication",
+            "Private Supabase Storage Bucket",
+          ],
+          type: "service",
+        },
+        {
+          title: "Hybrid Retrieval & RAG",
+          subtitle: "pgvector & RRF & Gemini",
+          items: [
+            "Dense pgvector Cosine Search",
+            "Sparse Lexical Search & RRF Fusion (k=60)",
+            "Cross-Encoder / LLM Reranking",
+            "Multi-Mode Grounded Context Assembly",
+            "Challenge Generation & Evaluation",
+          ],
+          type: "service",
+        },
+        {
+          title: "Persistence & Learning Data",
+          subtitle: "Supabase PostgreSQL & pgvector",
+          items: [
+            "11 Relational Entity Models",
+            "Alembic Schema Versioning",
+            "Vector Embeddings (gemini-embedding-001)",
+            "ConceptProgress & KnowledgeGap Records",
+            "Decay-Scheduled Spaced Repetition Queue",
+          ],
+          type: "database",
+        },
+      ],
+      coreWorkflow: [
+        {
+          stepNumber: 1,
+          title: "Document Upload & Checksum Hashing",
+          actor: "Learner",
+          action: "Uploads technical journal or PDF via web client",
+          technicalDetail:
+            "Backend computes SHA-256 checksum to enforce idempotency and avoid duplicate chunking across re-uploads.",
+        },
+        {
+          stepNumber: 2,
+          title: "Structural Parsing & Sectioning",
+          actor: "Ingestion Pipeline",
+          action: "Parses PDF and extracts hierarchical headings and text blocks",
+          technicalDetail:
+            "Deconstructs content into semantic sections preserving parent-child heading context.",
+        },
+        {
+          stepNumber: 3,
+          title: "Chunking & Vector Embedding",
+          actor: "Chunking Service",
+          action: "Splits sections into structurally bounded chunks and generates embeddings",
+          technicalDetail:
+            "Stores chunk records with metadata and inserts dense vector representations into pgvector.",
+        },
+        {
+          stepNumber: 4,
+          title: "Context-Grounded Querying",
+          actor: "RAG Engine",
+          action: "Executes similarity search and formats grounded context for study modes",
+          technicalDetail:
+            "Retrieves top-k chunks with confidence scoring and streams answers citing exact source sections.",
+        },
+        {
+          stepNumber: 5,
+          title: "Active Recall Challenge & Gap Tracking",
+          actor: "Learning Service",
+          action: "Generates quiz challenges and grades learner responses",
+          technicalDetail:
+            "Logs attempt scores, identifies concept deficiencies, and updates KnowledgeGap tracking records.",
+        },
+      ],
+      features: [
+        "DEPLOYED SYSTEM â€” Next.js 15 Web Application & Mobile PWA: Fully deployed on Vercel with responsive dashboard cockpit, interactive concept review, study challenges, library management, and mobile PWA support.",
+        "DEPLOYED SYSTEM â€” Containerized FastAPI Backend on Render: High-performance asynchronous Python service with modular domain architecture, OpenAPI contracts, and personal Bearer token access control.",
+        "DEPLOYED SYSTEM â€” Supabase PostgreSQL & pgvector Persistence: Production database with 11 relational models, Alembic migrations, dense vector embeddings, and private cloud storage for PDF persistence.",
+        "DEPLOYED CAPABILITY â€” End-to-End Hybrid Search & Reranking: Combines dense pgvector cosine similarity with sparse lexical search using Reciprocal Rank Fusion (RRF k=60) and LLM reranking for high precision retrieval.",
+        "DEPLOYED CAPABILITY â€” Grounded Ask with Exact Source Citations: Context-grounded Q&A with beginner, interview, and senior study modes citing exact document titles, section titles, and page boundaries.",
+        "DEPLOYED CAPABILITY â€” Interactive Challenge & Automated Evaluator: Generates targeted conceptual questions from retrieved source material and grades student responses with automated gap extraction.",
+        "DEPLOYED CAPABILITY â€” Adaptive Spaced Repetition Review Queue: Decay-based scheduling calculating review urgency and prioritizing high-decay concepts and recurring knowledge gaps.",
+        "DEPLOYED CAPABILITY â€” Document Ingestion & Checksum Deduplication: Hierarchical PDF parsing with PyMuPDF, structural chunking, and SHA-256 checksum hashing to prevent redundant indexing.",
+        "FUTURE ENHANCEMENTS â€” Multi-Format Ingestion: Expanding ingestion to support source code directory trees, Markdown technical notes, and audio transcripts.",
+        "FUTURE ENHANCEMENTS â€” Multi-Tenant Workspaces: Upgrading from personal single-user Bearer token auth to multi-tenant team workspaces with OAuth/JWT authentication and row-level tenancy.",
+      ],
+      backendMechanisms: [
+        {
+          title: "Relational Schema with pgvector",
+          description:
+            "PostgreSQL models link projects down to granular chunks and vector embeddings, enabling both relational integrity and similarity search.",
+          keyTakeaway:
+            "Unifies structured entity relationships and vector embeddings within a single ACID-compliant database.",
+        },
+        {
+          title: "Deterministic Checksum Verification",
+          description:
+            "Computes cryptographic hashes of incoming document payloads before running ingestion pipelines.",
+          keyTakeaway:
+            "Prevents redundant re-indexing and eliminates duplicate chunk generation in vector storage.",
+        },
+        {
+          title: "Modular Service Decoupling",
+          description:
+            "Separates ingestion, vector retrieval, LLM prompt assembly, and learning analytics into dedicated Python modules.",
+          keyTakeaway:
+            "Allows independent testing, benchmarking, and optimization of individual RAG components.",
+        },
+      ],
+      dataPersistence: [
+        {
+          modelName: "Document / DocumentVersion",
+          purpose:
+            "Tracks document ownership, metadata, source file paths, and version history across updates.",
+          keyFieldsOrPatterns: ["id", "project_id", "title", "content_hash", "created_at"],
+        },
+        {
+          modelName: "Section / Chunk",
+          purpose:
+            "Stores hierarchical document sections and token-bounded text chunks with heading breadcrumbs.",
+          keyFieldsOrPatterns: ["id", "document_version_id", "heading", "content", "token_count"],
+        },
+        {
+          modelName: "ChunkEmbedding",
+          purpose:
+            "Stores dense vector embeddings with pgvector Vector type for semantic similarity search.",
+          keyFieldsOrPatterns: ["id", "chunk_id", "embedding", "model_name"],
+        },
+        {
+          modelName: "KnowledgeGap / ConceptProgress",
+          purpose:
+            "Tracks concept mastery levels, review queues, and specific knowledge gaps identified during challenges.",
+          keyFieldsOrPatterns: ["id", "concept_name", "mastery_score", "gap_severity", "last_reviewed_at"],
+        },
+      ],
+      engineeringDecisions: [
+        {
+          title: "PostgreSQL with pgvector vs Standalone Vector DB",
+          context:
+            "A study engine requires rich relational entities (users, projects, versions, quiz attempts) alongside dense vector search.",
+          decision:
+            "Adopted PostgreSQL with the pgvector extension managed via SQLAlchemy and Alembic instead of a separate vector-only database.",
+          rationale:
+            "Keeps all relational data, version history, and vector embeddings in a single ACID-compliant database, eliminating dual-write synchronization bugs and distributed transaction overhead.",
+        },
+        {
+          title: "FastAPI Backend with Modular Domain Architecture",
+          context:
+            "AI applications often interleave long-running parsing, async LLM streams, and synchronous database transactions.",
+          decision:
+            "Built the backend in FastAPI with Python, organizing functionality into distinct domains (ingestion, rag, retrieval, learning).",
+          rationale:
+            "Provides native async support, automated OpenAPI contract generation, and clean boundaries for testing retrieval pipelines independently from UI.",
+        },
+        {
+          title: "Cloud Deployment with Personal Token Gate (Vercel + Render + Supabase)",
+          context:
+            "Transitioning RecallForge from local development to a deployed, secure web application accessible across personal devices (desktop and mobile PWA) without exposing unprotected AI endpoints to the public internet.",
+          decision:
+            "Deployed the Next.js frontend to Vercel and the containerized FastAPI backend to Render, backed by Supabase PostgreSQL (pgvector) and private Supabase Storage. Secured all protected API endpoints with constant-time Bearer token verification and a client-side access gate.",
+          rationale:
+            "Provides reliable cloud availability and persistent storage across devices while ensuring strict personal access control and protecting AI API quota from unauthorized public abuse.",
+        },
+      ],
+      challenges: [
+        {
+          title: "Granular PDF Structural Chunking",
+          problem:
+            "Naive character-count chunking splits code blocks, headings, and cohesive conceptual explanations across chunk boundaries.",
+          rootCause: "Arbitrary sliding windows disregard document semantic hierarchy.",
+          solution:
+            "Implemented a two-pass parser extracting section headings first, then chunking within structural sections while preserving parent heading breadcrumbs.",
+        },
+        {
+          title: "Vector Dimension & Schema Synchronization",
+          problem:
+            "Changing embedding models or database environments requires reliable vector column indexing.",
+          rootCause: "pgvector requires specific index types (HNSW/IVFFlat) and dimension configurations.",
+          solution:
+            "Codified database schema in SQLAlchemy and managed migrations via Alembic scripts with explicit vector extension checks.",
+        },
+        {
+          title: "Cloud Storage Persistence on Ephemeral Containers",
+          problem:
+            "Ephemeral container instances on Render lose locally stored PDF files across redeployments and restarts.",
+          rootCause: "Default local file storage writes to the container filesystem.",
+          solution:
+            "Implemented configurable cloud storage with private Supabase Storage buckets, ensuring uploaded documents persist across container restarts.",
+        },
+      ],
+      reliabilityPatterns: [
+        "SHA-256 document hashing for idempotent ingestion and deduplication",
+        "Alembic version-controlled database schema migrations",
+        "Modular Python package boundaries isolating retrieval from ingestion",
+        "Exact source citation linking with chunk and section identifiers",
+        "Personal Bearer token authentication with constant-time comparison protecting backend endpoints",
+      ],
+      securityConsiderations: [
+        "File upload validation checking MIME types, size thresholds, and file extensions",
+        "Environment variable segregation for database credentials and AI provider keys",
+        "Scoped project isolation preventing cross-project document leakage",
+        "Personal Bearer token authentication with constant-time comparison (secrets.compare_digest)",
+        "Strict CORS origin restriction allowing only authorized production origins",
+        "Private Supabase Storage buckets with server-only service-role keys preventing unauthorized document downloads",
+      ],
+      integrations: [
+        { name: "FastAPI", purpose: "Asynchronous backend web framework", category: "Backend" },
+        { name: "Next.js", purpose: "Frontend client application and mobile PWA", category: "Frontend" },
+        { name: "PostgreSQL & pgvector", purpose: "Relational database and vector similarity engine", category: "Database" },
+        { name: "Supabase", purpose: "Managed PostgreSQL, pgvector, and private object storage", category: "Cloud Infrastructure" },
+        { name: "SQLAlchemy & Alembic", purpose: "Python ORM and schema migration manager", category: "Data Access" },
+        { name: "Render", purpose: "Containerized backend API cloud hosting", category: "Cloud Infrastructure" },
+        { name: "Vercel", purpose: "Frontend production hosting and edge routing", category: "Cloud Infrastructure" },
+      ],
+      lessonsLearned: [
+        "Unifying relational models, vector embeddings, and private document storage within a cohesive cloud architecture simplifies multi-entity querying and data integrity.",
+        "Combining dense vector search with sparse lexical search via Reciprocal Rank Fusion (RRF) substantially outperforms pure semantic search on specific technical terms and error messages.",
+        "Decoupling the frontend on Vercel from a containerized FastAPI backend on Render provides independent deployment lifecycles and clean API contracts.",
+      ],
+    },
+  },
+  {
     id: "career-copilot",
     slug: "career-copilot-ai",
     title: "Career Copilot AI",
@@ -590,308 +898,6 @@ export const projectsData: Project[] = [
       lessonsLearned: [
         "Structuring input context cleanly directly improves language model response relevance.",
         "Asynchronous Python frameworks provide an effective backend layer for AI services.",
-      ],
-    },
-  },
-  {
-    id: "personal-ai-study-engine",
-    slug: "personal-ai-study-engine",
-    title: "Personal AI Study Engine (RecallForge AI)",
-    shortDescription:
-      "Deployed personal AI study and knowledge-retrieval engine featuring hybrid search (pgvector + lexical RRF), LLM reranking, active-recall challenges, and adaptive spaced-repetition review queues.",
-    longDescription:
-      "RecallForge AI is a deployed personal AI study and knowledge-retrieval platform for learning from technical documents, project journals, and engineering documentation through grounded search, source-backed answers, and active-recall workflows. Built on a modular FastAPI backend and Next.js frontend, it leverages Supabase PostgreSQL with pgvector, hybrid search (dense + lexical RRF), LLM reranking, and adaptive spaced-repetition challenge cycles.",
-    category: "AI & Automation",
-    technologies: [
-      "FastAPI",
-      "Python",
-      "Next.js",
-      "TypeScript",
-      "PostgreSQL",
-      "Supabase",
-      "pgvector",
-      "SQLAlchemy",
-      "Alembic",
-      "RAG Architecture",
-      "Tailwind CSS",
-      "Render",
-      "Vercel",
-    ],
-    highlights: [
-      "Deployed cloud architecture pairing Next.js on Vercel with a containerized FastAPI backend on Render",
-      "Hybrid search combining pgvector dense cosine similarity with sparse lexical search via Reciprocal Rank Fusion (RRF)",
-      "Adaptive spaced-repetition review queue and automated knowledge-gap extraction from challenge attempts",
-      "Mobile-responsive PWA experience with web manifest, standalone display mode, and touch icon support",
-    ],
-    responsibilities: [
-      "Architected full-stack platform across Next.js frontend, FastAPI backend, and Supabase PostgreSQL data layer",
-      "Engineered hybrid search engine combining pgvector dense embeddings with sparse lexical ranking via RRF (k=60)",
-      "Implemented active recall challenge system, automated evaluation pipeline, and knowledge-gap tracking service",
-      "Configured secure cloud deployment across Vercel, Render, and Supabase with personal Bearer token access control",
-    ],
-    projectType: "AI System",
-    featured: true,
-    status: "Deployed",
-    repositoryVisibility: "public",
-    githubUrl: "https://github.com/piyush99755/RecallForge-AI",
-    liveUrl: "https://recall-forge-ai.vercel.app/review",
-    caseStudy: {
-      overview:
-        "RecallForge AI is a deployed personal AI study and knowledge-retrieval platform designed to search, synthesize, and evaluate knowledge across software project documentation, system architecture records, code snippets, and technical interview materials.",
-      problem:
-        "When studying complex engineering domains, unstructured notes and generic AI chats lack grounded context from real project records, suffer from hallucinations without exact source citations, and fail to track which concepts a learner has actually mastered versus where knowledge gaps remain.",
-      solution:
-        "Architected and deployed a dedicated personal study platform pairing a Next.js frontend with a FastAPI backend and Supabase PostgreSQL (pgvector). Technical PDFs are ingested, versioned, and partitioned into semantically rich sections and chunks with SHA-256 deduplication. A hybrid retrieval pipeline combines dense vector search with lexical ranking and LLM reranking, feeding grounded context into study sessions, multi-mode Q&A, and active recall challenges with spaced-repetition review tracking.",
-      roleDescription:
-        "Solo architect and full-stack engineer leading frontend, backend, database modeling, Alembic migrations, ingestion pipeline, hybrid RAG retrieval, and cloud deployment.",
-      architectureDescription:
-        "The platform adopts a modular monorepo architecture: apps/api hosts the containerized FastAPI backend deployed on Render, interfacing with Supabase PostgreSQL (pgvector) and Supabase Storage; apps/web provides a Next.js 15 App Router client application deployed on Vercel with mobile-responsive PWA support. Backend domains are structured into distinct service modules: ingestion, retrieval, RAG, and learning.",
-      architectureNodes: [
-        {
-          title: "Client Web App & PWA",
-          subtitle: "Next.js 15 / React / Vercel",
-          items: [
-            "Daily Study Cockpit (Dashboard)",
-            "Interactive Concept Review Workspace",
-            "Grounded Ask Interface with Citations",
-            "Document Library & Upload",
-            "Mobile-Responsive PWA with Web Manifest",
-          ],
-          type: "frontend",
-        },
-        {
-          title: "API Gateway & Security",
-          subtitle: "FastAPI / Render",
-          items: [
-            "Asynchronous Endpoints",
-            "Personal Bearer Token Auth Gate",
-            "Pydantic Validation Schemas",
-            "CORS & Health Check Probes",
-          ],
-          type: "backend",
-        },
-        {
-          title: "Ingestion & Storage",
-          subtitle: "PyMuPDF & Supabase Storage",
-          items: [
-            "PDF Parser & Hierarchical Sectioning",
-            "Structural Paragraph & QA Chunker",
-            "SHA-256 Checksum Deduplication",
-            "Private Supabase Storage Bucket",
-          ],
-          type: "service",
-        },
-        {
-          title: "Hybrid Retrieval & RAG",
-          subtitle: "pgvector & RRF & Gemini",
-          items: [
-            "Dense pgvector Cosine Search",
-            "Sparse Lexical Search & RRF Fusion (k=60)",
-            "Cross-Encoder / LLM Reranking",
-            "Multi-Mode Grounded Context Assembly",
-            "Challenge Generation & Evaluation",
-          ],
-          type: "service",
-        },
-        {
-          title: "Persistence & Learning Data",
-          subtitle: "Supabase PostgreSQL & pgvector",
-          items: [
-            "11 Relational Entity Models",
-            "Alembic Schema Versioning",
-            "Vector Embeddings (gemini-embedding-001)",
-            "ConceptProgress & KnowledgeGap Records",
-            "Decay-Scheduled Spaced Repetition Queue",
-          ],
-          type: "database",
-        },
-      ],
-      coreWorkflow: [
-        {
-          stepNumber: 1,
-          title: "Document Upload & Checksum Hashing",
-          actor: "Learner",
-          action: "Uploads technical journal or PDF via web client",
-          technicalDetail:
-            "Backend computes SHA-256 checksum to enforce idempotency and avoid duplicate chunking across re-uploads.",
-        },
-        {
-          stepNumber: 2,
-          title: "Structural Parsing & Sectioning",
-          actor: "Ingestion Pipeline",
-          action: "Parses PDF and extracts hierarchical headings and text blocks",
-          technicalDetail:
-            "Deconstructs content into semantic sections preserving parent-child heading context.",
-        },
-        {
-          stepNumber: 3,
-          title: "Chunking & Vector Embedding",
-          actor: "Chunking Service",
-          action: "Splits sections into structurally bounded chunks and generates embeddings",
-          technicalDetail:
-            "Stores chunk records with metadata and inserts dense vector representations into pgvector.",
-        },
-        {
-          stepNumber: 4,
-          title: "Context-Grounded Querying",
-          actor: "RAG Engine",
-          action: "Executes similarity search and formats grounded context for study modes",
-          technicalDetail:
-            "Retrieves top-k chunks with confidence scoring and streams answers citing exact source sections.",
-        },
-        {
-          stepNumber: 5,
-          title: "Active Recall Challenge & Gap Tracking",
-          actor: "Learning Service",
-          action: "Generates quiz challenges and grades learner responses",
-          technicalDetail:
-            "Logs attempt scores, identifies concept deficiencies, and updates KnowledgeGap tracking records.",
-        },
-      ],
-      features: [
-        "DEPLOYED SYSTEM — Next.js 15 Web Application & Mobile PWA: Fully deployed on Vercel with responsive dashboard cockpit, interactive concept review, study challenges, library management, and mobile PWA support.",
-        "DEPLOYED SYSTEM — Containerized FastAPI Backend on Render: High-performance asynchronous Python service with modular domain architecture, OpenAPI contracts, and personal Bearer token access control.",
-        "DEPLOYED SYSTEM — Supabase PostgreSQL & pgvector Persistence: Production database with 11 relational models, Alembic migrations, dense vector embeddings, and private cloud storage for PDF persistence.",
-        "DEPLOYED CAPABILITY — End-to-End Hybrid Search & Reranking: Combines dense pgvector cosine similarity with sparse lexical search using Reciprocal Rank Fusion (RRF k=60) and LLM reranking for high precision retrieval.",
-        "DEPLOYED CAPABILITY — Grounded Ask with Exact Source Citations: Context-grounded Q&A with beginner, interview, and senior study modes citing exact document titles, section titles, and page boundaries.",
-        "DEPLOYED CAPABILITY — Interactive Challenge & Automated Evaluator: Generates targeted conceptual questions from retrieved source material and grades student responses with automated gap extraction.",
-        "DEPLOYED CAPABILITY — Adaptive Spaced Repetition Review Queue: Decay-based scheduling calculating review urgency and prioritizing high-decay concepts and recurring knowledge gaps.",
-        "DEPLOYED CAPABILITY — Document Ingestion & Checksum Deduplication: Hierarchical PDF parsing with PyMuPDF, structural chunking, and SHA-256 checksum hashing to prevent redundant indexing.",
-        "FUTURE ENHANCEMENTS — Multi-Format Ingestion: Expanding ingestion to support source code directory trees, Markdown technical notes, and audio transcripts.",
-        "FUTURE ENHANCEMENTS — Multi-Tenant Workspaces: Upgrading from personal single-user Bearer token auth to multi-tenant team workspaces with OAuth/JWT authentication and row-level tenancy.",
-      ],
-      backendMechanisms: [
-        {
-          title: "Relational Schema with pgvector",
-          description:
-            "PostgreSQL models link projects down to granular chunks and vector embeddings, enabling both relational integrity and similarity search.",
-          keyTakeaway:
-            "Unifies structured entity relationships and vector embeddings within a single ACID-compliant database.",
-        },
-        {
-          title: "Deterministic Checksum Verification",
-          description:
-            "Computes cryptographic hashes of incoming document payloads before running ingestion pipelines.",
-          keyTakeaway:
-            "Prevents redundant re-indexing and eliminates duplicate chunk generation in vector storage.",
-        },
-        {
-          title: "Modular Service Decoupling",
-          description:
-            "Separates ingestion, vector retrieval, LLM prompt assembly, and learning analytics into dedicated Python modules.",
-          keyTakeaway:
-            "Allows independent testing, benchmarking, and optimization of individual RAG components.",
-        },
-      ],
-      dataPersistence: [
-        {
-          modelName: "Document / DocumentVersion",
-          purpose:
-            "Tracks document ownership, metadata, source file paths, and version history across updates.",
-          keyFieldsOrPatterns: ["id", "project_id", "title", "content_hash", "created_at"],
-        },
-        {
-          modelName: "Section / Chunk",
-          purpose:
-            "Stores hierarchical document sections and token-bounded text chunks with heading breadcrumbs.",
-          keyFieldsOrPatterns: ["id", "document_version_id", "heading", "content", "token_count"],
-        },
-        {
-          modelName: "ChunkEmbedding",
-          purpose:
-            "Stores dense vector embeddings with pgvector Vector type for semantic similarity search.",
-          keyFieldsOrPatterns: ["id", "chunk_id", "embedding", "model_name"],
-        },
-        {
-          modelName: "KnowledgeGap / ConceptProgress",
-          purpose:
-            "Tracks concept mastery levels, review queues, and specific knowledge gaps identified during challenges.",
-          keyFieldsOrPatterns: ["id", "concept_name", "mastery_score", "gap_severity", "last_reviewed_at"],
-        },
-      ],
-      engineeringDecisions: [
-        {
-          title: "PostgreSQL with pgvector vs Standalone Vector DB",
-          context:
-            "A study engine requires rich relational entities (users, projects, versions, quiz attempts) alongside dense vector search.",
-          decision:
-            "Adopted PostgreSQL with the pgvector extension managed via SQLAlchemy and Alembic instead of a separate vector-only database.",
-          rationale:
-            "Keeps all relational data, version history, and vector embeddings in a single ACID-compliant database, eliminating dual-write synchronization bugs and distributed transaction overhead.",
-        },
-        {
-          title: "FastAPI Backend with Modular Domain Architecture",
-          context:
-            "AI applications often interleave long-running parsing, async LLM streams, and synchronous database transactions.",
-          decision:
-            "Built the backend in FastAPI with Python, organizing functionality into distinct domains (ingestion, rag, retrieval, learning).",
-          rationale:
-            "Provides native async support, automated OpenAPI contract generation, and clean boundaries for testing retrieval pipelines independently from UI.",
-        },
-        {
-          title: "Cloud Deployment with Personal Token Gate (Vercel + Render + Supabase)",
-          context:
-            "Transitioning RecallForge from local development to a deployed, secure web application accessible across personal devices (desktop and mobile PWA) without exposing unprotected AI endpoints to the public internet.",
-          decision:
-            "Deployed the Next.js frontend to Vercel and the containerized FastAPI backend to Render, backed by Supabase PostgreSQL (pgvector) and private Supabase Storage. Secured all protected API endpoints with constant-time Bearer token verification and a client-side access gate.",
-          rationale:
-            "Provides reliable cloud availability and persistent storage across devices while ensuring strict personal access control and protecting AI API quota from unauthorized public abuse.",
-        },
-      ],
-      challenges: [
-        {
-          title: "Granular PDF Structural Chunking",
-          problem:
-            "Naive character-count chunking splits code blocks, headings, and cohesive conceptual explanations across chunk boundaries.",
-          rootCause: "Arbitrary sliding windows disregard document semantic hierarchy.",
-          solution:
-            "Implemented a two-pass parser extracting section headings first, then chunking within structural sections while preserving parent heading breadcrumbs.",
-        },
-        {
-          title: "Vector Dimension & Schema Synchronization",
-          problem:
-            "Changing embedding models or database environments requires reliable vector column indexing.",
-          rootCause: "pgvector requires specific index types (HNSW/IVFFlat) and dimension configurations.",
-          solution:
-            "Codified database schema in SQLAlchemy and managed migrations via Alembic scripts with explicit vector extension checks.",
-        },
-        {
-          title: "Cloud Storage Persistence on Ephemeral Containers",
-          problem:
-            "Ephemeral container instances on Render lose locally stored PDF files across redeployments and restarts.",
-          rootCause: "Default local file storage writes to the container filesystem.",
-          solution:
-            "Implemented configurable cloud storage with private Supabase Storage buckets, ensuring uploaded documents persist across container restarts.",
-        },
-      ],
-      reliabilityPatterns: [
-        "SHA-256 document hashing for idempotent ingestion and deduplication",
-        "Alembic version-controlled database schema migrations",
-        "Modular Python package boundaries isolating retrieval from ingestion",
-        "Exact source citation linking with chunk and section identifiers",
-        "Personal Bearer token authentication with constant-time comparison protecting backend endpoints",
-      ],
-      securityConsiderations: [
-        "File upload validation checking MIME types, size thresholds, and file extensions",
-        "Environment variable segregation for database credentials and AI provider keys",
-        "Scoped project isolation preventing cross-project document leakage",
-        "Personal Bearer token authentication with constant-time comparison (secrets.compare_digest)",
-        "Strict CORS origin restriction allowing only authorized production origins",
-        "Private Supabase Storage buckets with server-only service-role keys preventing unauthorized document downloads",
-      ],
-      integrations: [
-        { name: "FastAPI", purpose: "Asynchronous backend web framework", category: "Backend" },
-        { name: "Next.js", purpose: "Frontend client application and mobile PWA", category: "Frontend" },
-        { name: "PostgreSQL & pgvector", purpose: "Relational database and vector similarity engine", category: "Database" },
-        { name: "Supabase", purpose: "Managed PostgreSQL, pgvector, and private object storage", category: "Cloud Infrastructure" },
-        { name: "SQLAlchemy & Alembic", purpose: "Python ORM and schema migration manager", category: "Data Access" },
-        { name: "Render", purpose: "Containerized backend API cloud hosting", category: "Cloud Infrastructure" },
-        { name: "Vercel", purpose: "Frontend production hosting and edge routing", category: "Cloud Infrastructure" },
-      ],
-      lessonsLearned: [
-        "Unifying relational models, vector embeddings, and private document storage within a cohesive cloud architecture simplifies multi-entity querying and data integrity.",
-        "Combining dense vector search with sparse lexical search via Reciprocal Rank Fusion (RRF) substantially outperforms pure semantic search on specific technical terms and error messages.",
-        "Decoupling the frontend on Vercel from a containerized FastAPI backend on Render provides independent deployment lifecycles and clean API contracts.",
       ],
     },
   },

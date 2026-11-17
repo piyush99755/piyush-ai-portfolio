@@ -75,6 +75,54 @@ async function runRecallForgeRegressionCheck() {
     `Features count: ${project?.caseStudy?.features.length}`
   );
 
+  // 1.5 Visual Assets, Accessibility & Project Ordering Verification
+  const thumbnailExists = fs.existsSync("public/projects/recallforge/thumbnail.png");
+  const posterExists = fs.existsSync("public/projects/recallforge/poster.png");
+  const iconExists = fs.existsSync("public/projects/recallforge/project-icon.png");
+  const ogExists = fs.existsSync("public/projects/recallforge/og.png");
+
+  assert(thumbnailExists, "RecallForge thumbnail asset exists on disk", "public/projects/recallforge/thumbnail.png");
+  assert(posterExists, "RecallForge poster asset exists on disk", "public/projects/recallforge/poster.png");
+  assert(iconExists, "RecallForge project icon asset exists on disk", "public/projects/recallforge/project-icon.png");
+  assert(ogExists, "RecallForge OG image exists on disk", "public/projects/recallforge/og.png");
+
+  assert(
+    project?.thumbnail === "/projects/recallforge/thumbnail.png",
+    "RecallForge project data uses /projects/recallforge/thumbnail.png",
+    `thumbnail: ${project?.thumbnail}`
+  );
+  assert(
+    project?.poster === "/projects/recallforge/poster.png",
+    "RecallForge project data uses /projects/recallforge/poster.png",
+    `poster: ${project?.poster}`
+  );
+  assert(
+    project?.icon === "/projects/recallforge/project-icon.png",
+    "RecallForge project data registers /projects/recallforge/project-icon.png",
+    `icon: ${project?.icon}`
+  );
+  assert(
+    project?.ogImage === "/projects/recallforge/og.png",
+    "RecallForge project data registers /projects/recallforge/og.png",
+    `ogImage: ${project?.ogImage}`
+  );
+  assert(
+    Boolean(project?.thumbnailAlt && !project.thumbnailAlt.includes(".png")) &&
+      Boolean(project?.posterAlt && !project.posterAlt.includes(".png")),
+    "RecallForge thumbnail and poster have descriptive non-filename alt text",
+    `thumbnailAlt: "${project?.thumbnailAlt}" | posterAlt: "${project?.posterAlt}"`
+  );
+
+  const projectIds = projectsData.map((p) => p.id);
+  const expectedOrder = ["myfelipe-ai", "ecommerce-hub", "personal-ai-study-engine", "career-copilot"];
+  const rfIndex = projectIds.indexOf("personal-ai-study-engine");
+  const ccIndex = projectIds.indexOf("career-copilot");
+  assert(
+    rfIndex !== -1 && ccIndex !== -1 && rfIndex < ccIndex && JSON.stringify(projectIds) === JSON.stringify(expectedOrder),
+    "Project ordering places RecallForge third, before Career Copilot (MyFelipe -> E-commerce -> RecallForge -> Career Copilot)",
+    `Order: ${projectIds.join(" -> ")}`
+  );
+
   // 2. Ask Piyush Intent Checks
   console.log("\n--- ASK PIYUSH INTENT VERIFICATION ---");
   const testIntents = [

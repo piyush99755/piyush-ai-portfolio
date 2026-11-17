@@ -139,6 +139,11 @@ export interface Project {
   githubUrl?: string;
   liveUrl?: string;
   thumbnail?: string;
+  thumbnailAlt?: string;
+  poster?: string;
+  posterAlt?: string;
+  icon?: string;
+  ogImage?: string;
   screenshots?: string[];
   repositoryVisibility?: "public" | "private" | "not-available";
   caseStudy?: CaseStudyDetails;

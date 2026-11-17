@@ -8,10 +8,15 @@ import { Bot, Layers, Workflow, Code2, Lock } from "lucide-react";
 
 interface ProjectThumbnailProps {
   project: Project;
+  variant?: "thumbnail" | "hero";
   className?: string;
 }
 
-export function ProjectThumbnail({ project, className = "" }: ProjectThumbnailProps) {
+export function ProjectThumbnail({
+  project,
+  variant = "thumbnail",
+  className = "",
+}: ProjectThumbnailProps) {
   const [imageError, setImageError] = useState(false);
 
   const getCategoryIcon = (category: string) => {
@@ -27,19 +32,38 @@ export function ProjectThumbnail({ project, className = "" }: ProjectThumbnailPr
     }
   };
 
-  const hasImage = project.thumbnail && !imageError;
+  const isHero = variant === "hero";
+  const imageSrc = isHero ? project.poster ?? project.thumbnail : project.thumbnail;
+  const imageAlt = isHero
+    ? project.posterAlt ?? project.thumbnailAlt ?? `${project.title} screenshot preview`
+    : project.thumbnailAlt ?? `${project.title} screenshot preview`;
+
+  const hasImage = Boolean(imageSrc) && !imageError;
 
   return (
-    <div className={`relative aspect-video w-full overflow-hidden rounded-t-xl bg-slate-900 border-b border-slate-800/80 group ${className}`}>
+    <div
+      className={`relative aspect-video w-full overflow-hidden bg-slate-900 group ${
+        isHero ? "rounded-xl" : "rounded-t-xl border-b border-slate-800/80"
+      } ${className}`}
+    >
       {hasImage ? (
         <Image
-          src={project.thumbnail!}
-          alt={`${project.title} screenshot preview`}
+          src={imageSrc!}
+          alt={imageAlt}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes={
+            isHero
+              ? "(max-width: 768px) 100vw, 896px"
+              : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          }
+          className={
+            isHero
+              ? "object-cover"
+              : "object-cover transition-transform duration-500 group-hover:scale-105"
+          }
           onError={() => setImageError(true)}
-          priority={project.featured}
+          priority={isHero}
+          fetchPriority={isHero ? "high" : undefined}
         />
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950/40 p-6 flex flex-col justify-between transition-transform duration-500 group-hover:scale-[1.02]">
@@ -49,7 +73,17 @@ export function ProjectThumbnail({ project, className = "" }: ProjectThumbnailPr
           {/* Top Bar: Icon + Category Badge */}
           <div className="relative z-10 flex items-center justify-between">
             <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 shadow-inner">
-              {getCategoryIcon(project.category)}
+              {project.icon ? (
+                <Image
+                  src={project.icon}
+                  alt={`${project.title} emblem`}
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-md object-contain"
+                />
+              ) : (
+                getCategoryIcon(project.category)
+              )}
             </div>
             {project.repositoryVisibility === "private" && (
               <Badge variant="outline" className="bg-amber-950/40 text-amber-300 border-amber-800/50 flex items-center gap-1.5 px-2.5 py-1">

@@ -59,7 +59,25 @@ export async function generateMetadata({
     openGraph: {
       title: `${project.title} - Engineering Case Study`,
       description: project.shortDescription,
+      ...(project.ogImage && {
+        images: [
+          {
+            url: project.ogImage,
+            width: 1200,
+            height: 630,
+            alt: project.posterAlt ?? project.thumbnailAlt ?? project.title,
+          },
+        ],
+      }),
     },
+    ...(project.ogImage && {
+      twitter: {
+        card: "summary_large_image",
+        title: `${project.title} - Engineering Case Study`,
+        description: project.shortDescription,
+        images: [project.ogImage],
+      },
+    }),
   };
 }
 
@@ -267,9 +285,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </div>
         )}
 
-        {/* Banner Thumbnail */}
+        {/* Banner Thumbnail / Hero Poster */}
         <div className="rounded-xl overflow-hidden border border-border/60 shadow-md">
-          <ProjectThumbnail project={project} />
+          <ProjectThumbnail project={project} variant="hero" />
         </div>
 
         {/* Technologies & Verified Links CTA */}
